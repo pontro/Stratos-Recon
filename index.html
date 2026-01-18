@@ -6,73 +6,50 @@
   <title>StratosScout - Mobile Recon</title>
   
   <!-- PWA Meta Tags -->
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="/manifest.webmanifest">
   <meta name="theme-color" content="#0c0c0c">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Stratos">
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1149/1149168.png">
 
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background-color: #0c0c0c;
-      color: #ffffff;
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-      -webkit-tap-highlight-color: transparent;
+  
+  <!-- Tailwind CSS CDN for instant UI restoration -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            tech: ['Orbitron', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            inter: ['Inter', 'sans-serif'],
+          },
+        },
+      },
     }
-    .font-tech { font-family: 'Orbitron', sans-serif; }
-    .font-mono { font-family: 'JetBrains+Mono', monospace; }
-    
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: #111; }
-    ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    /* PWA safe area padding for modern iPhones */
-    main {
-      padding-bottom: env(safe-area-inset-bottom, 24px);
-    }
-  </style>
+  </script>
 <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@^19.2.3",
-    "react/": "https://esm.sh/react@^19.2.3/",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
     "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "qrcode.react": "https://esm.sh/qrcode.react@^4.2.0",
     "vite": "https://esm.sh/vite@^7.3.1",
     "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
-    "qrcode.react": "https://esm.sh/qrcode.react@^4.2.0"
+    "vite-plugin-pwa": "https://esm.sh/vite-plugin-pwa@^1.2.0"
   }
 }
 </script>
 </head>
 <body>
   <div id="root"></div>
-  <!-- Vite Entry Point -->
   <script type="module" src="/index.tsx"></script>
-  
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-          .then(reg => console.log('Stratos SW registered:', reg.scope))
-          .catch(err => console.log('Stratos SW failed:', err));
-      });
-    }
-  </script>
 </body>
 </html>
