@@ -1,0 +1,5 @@
+{
+  "name": "StratosScout",
+  "description": "Mobile Recon Unit for scouting and data collection, generating QR codes for offline data transfer.",
+  "requestFramePermissions": []
+}
