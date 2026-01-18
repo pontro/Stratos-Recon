@@ -34,6 +34,12 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        // Critical for offline page refreshes
+        navigateFallback: 'index.html',
+        // Forces the SW to take control immediately
+        skipWaiting: true,
+        clientsClaim: true,
+        cleanupOutdatedCaches: true,
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/esm\.sh\/.*/i,
