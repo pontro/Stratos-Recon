@@ -1,4 +1,8 @@
-/* Base styles to complement Tailwind CDN */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles to complement Tailwind */
 body {
   background-color: #0c0c0c;
   color: #ffffff;
