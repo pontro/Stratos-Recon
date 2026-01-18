@@ -1,1 +1,0 @@
-// This file is obsolete. The service worker is now handled by vite-plugin-pwa during build.
