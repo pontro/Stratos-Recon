@@ -14,12 +14,9 @@ export default defineConfig({
       includeAssets: ['favicon.ico', 'icon-512.png', 'apple-touch-icon.png', 'mask-icon.svg'],
       manifest: false, // We are using a static public/manifest.webmanifest
       workbox: {
-        globPatterns: [],
-        // Ensures that any URL requested offline returns index.html
-        // Ensures that any URL requested offline returns index.html
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
         navigateFallback: '/index.html',
         navigateFallbackAllowlist: [/^(?!\/__).*/],
-        // Immediate activation is critical for PWA UX
         skipWaiting: true,
         clientsClaim: true,
         cleanupOutdatedCaches: true,
