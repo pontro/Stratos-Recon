@@ -67,8 +67,8 @@ export const compressScoutingData = (data: ScoutingData): any[] => {
     data.climbLevel,                                 // 10: tele_hang
     data.adv_chasis,                                 // 11: adv_chasis
     data.adv_intake,                                 // 12: adv_intake
-    data.adv_shooter.length > 0 
-      ? data.adv_shooter.sort((a,b) => a-b).join('-') 
+    data.adv_shooter.length > 0
+      ? data.adv_shooter.sort((a, b) => a - b).join('-')
       : "4",                                         // 13: adv_shooter
     data.adv_climber,                                // 14: adv_climber
     data.adv_trench,                                 // 15: adv_trench
@@ -76,4 +76,66 @@ export const compressScoutingData = (data: ScoutingData): any[] => {
     data.adv_broke,                                  // 17: adv_broke
     data.adv_fixed                                   // 18: adv_fixed
   ];
+};
+
+export const decompressScoutingData = (data: any[]): Partial<ScoutingData> => {
+  // Reverse Maps
+  const reverseZoneMap: Record<number, StartingZone> = {
+    1: StartingZone.DEPOT,
+    2: StartingZone.CENTER,
+    3: StartingZone.OUTPOST
+  };
+
+  const reverseMatchTypeMap: Record<string, MatchType> = {
+    'Practice': MatchType.PRACTICE,
+    'Qualification': MatchType.QUALIFICATION,
+    'Playoff': MatchType.PLAYOFF
+  };
+
+  const reverseAllianceMap: Record<string, Alliance> = {
+    'Red': Alliance.RED,
+    'Blue': Alliance.BLUE
+  };
+
+  const reverseHopperMap: Record<string, number> = {
+    '0-20': 0,
+    '21-40': 1,
+    '41-60': 2,
+    '61+': 3
+  };
+
+  // Helper for shooter array
+  const parseShooter = (str: string): number[] => {
+    if (!str || str === '4') return [];
+    return str.split('-').map(n => parseInt(n, 10));
+  };
+
+  return {
+    teamNumber: String(data[0] || ''),
+    matchNumber: String(data[1] || ''),
+    matchType: reverseMatchTypeMap[data[2]] || MatchType.QUALIFICATION,
+    alliance: reverseAllianceMap[data[3]] || Alliance.RED,
+    scouter: data[4] || '',
+    startingZone: reverseZoneMap[data[5]] || StartingZone.DEPOT,
+    isActiveInAuto: Boolean(data[6]),
+    autoHang: Boolean(data[7]),
+    autoFuelPoints: Number(data[8] || 0),
+    teleopFuelPoints: Number(data[9] || 0),
+    climbLevel: Number(data[10] || 0),
+    adv_chasis: Number(data[11] || -1),
+    adv_intake: Number(data[12] || -1),
+    adv_shooter: parseShooter(data[13]),
+    adv_climber: Number(data[14] || -1),
+    adv_trench: Number(data[15] || -1),
+    adv_hopper_cap: data[16] ? (reverseHopperMap[data[16]] ?? -1) : -1,
+    adv_broke: Number(data[17] || -1),
+    adv_fixed: Number(data[18] || -1),
+
+    // Defaults for non-compressed fields
+    id: '',
+    autoComments: '',
+    teleopComments: '',
+    comments: '',
+    endgameScore: 0 // Recalculate if needed, but not in QR
+  };
 };

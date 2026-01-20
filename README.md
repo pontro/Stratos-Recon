@@ -25,14 +25,14 @@ To test the PWA on a mobile device (required for "Add to Home Screen"), you need
 ### Option A: Cloudflare Tunnel (Recommended)
 1.  Run the tunnel:
     ```bash
-    npx trycloudflared --url http://localhost:5173
+    npx trycloudflared --url http://localhost:4173
     ```
 2.  Open the provided `.trycloudflare.com` URL on your phone.
 
 ### Option B: Serveo (No install required)
 1.  Run the tunnel:
     ```bash
-    ssh -R 80:localhost:5173 serveo.net
+    ssh -R 80:localhost:4173 serveo.net
     ```
 2.  Open the provided URL on your phone.
 
