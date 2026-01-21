@@ -1,50 +1,54 @@
 import { ScoutingData, StartingZone, MatchType, Alliance } from '../types';
 
 /**
- * Strict positional JSON array compression based on manual v1.
- * Order (REVISED: Timestamp Removed):
- * 0: team_num (Int)
- * 1: match_num (Int)
- * 2: match_type (String)
- * 3: alliance (String)
- * 4: scouter (String)
- * 5: start_zone (Int)
- * 6: auto_active (Int)
- * 7: auto_hang (Int)
- * 8: auto_pts (Int)
- * 9: tele_pts (Int)
- * 10: tele_hang (Int)
- * 11: adv_chasis (Int)
- * 12: adv_intake (Int)
- * 13: adv_shooter (String)
- * 14: adv_climber (Int)
- * 15: adv_trench (Int)
- * 16: adv_hoppercapacity (String|null)
- * 17: adv_broke (Int)
- * 18: adv_fixed (Int)
+ * Strict Positional QR Code Compression
+ * Matches CSV Export Format Exactly.
+ * 
+ * Column Order:
+ * 0: timestamp (Always empty string "")
+ * 1: team_num
+ * 2: match_num
+ * 3: match_type
+ * 4: alliance
+ * 5: scouter
+ * 6: start_zone
+ * 7: auto_active
+ * 8: auto_hang
+ * 9: auto_pts
+ * 10: auto_comm
+ * 11: tele_pts
+ * 12: tele_comm
+ * 13: tele_hang (climbLevel)
+ * 14: adv_role
+ * 15: adv_broke
+ * 16: adv_fixed
+ * 17: adv_chasis
+ * 18: adv_intake
+ * 19: adv_shooter
+ * 20: adv_climber
+ * 21: adv_hoppercapacity
+ * 22: adv_trench
+ * 23: adv_comments (comments)
  */
 export const compressScoutingData = (data: ScoutingData): any[] => {
-  // 3.1 start_zone mapping
+  // Mappings
   const zoneMap: Record<StartingZone, number> = {
     [StartingZone.DEPOT]: 1,
     [StartingZone.CENTER]: 2,
     [StartingZone.OUTPOST]: 3
   };
 
-  // 3.3 Match type naming
   const matchTypeMap: Record<MatchType, string> = {
     [MatchType.PRACTICE]: 'Practice',
     [MatchType.QUALIFICATION]: 'Qualification',
     [MatchType.PLAYOFF]: 'Playoff'
   };
 
-  // 3.2 Alliance naming
   const allianceMap: Record<Alliance, string> = {
     [Alliance.RED]: 'Red',
     [Alliance.BLUE]: 'Blue'
   };
 
-  // Hopper capacity mapping
   const hopperMap: Record<number, string | null> = {
     0: '0-20',
     1: '21-40',
@@ -54,27 +58,32 @@ export const compressScoutingData = (data: ScoutingData): any[] => {
   };
 
   return [
-    parseInt(data.teamNumber, 10) || 0,              // 0: team_num
-    parseInt(data.matchNumber, 10) || 0,             // 1: match_num
-    matchTypeMap[data.matchType],                    // 2: match_type
-    allianceMap[data.alliance],                      // 3: alliance
-    data.scouter || 'NA',                            // 4: scouter
-    zoneMap[data.startingZone],                      // 5: start_zone
-    data.isActiveInAuto ? 1 : 0,                     // 6: auto_active
-    data.autoHang ? 1 : 0,                           // 7: auto_hang
-    data.autoFuelPoints,                             // 8: auto_pts
-    data.teleopFuelPoints,                           // 9: tele_pts
-    data.climbLevel,                                 // 10: tele_hang
-    data.adv_chasis,                                 // 11: adv_chasis
-    data.adv_intake,                                 // 12: adv_intake
+    "",                                              // 0: timestamp (Empty)
+    parseInt(data.teamNumber, 10) || 0,              // 1: team_num
+    parseInt(data.matchNumber, 10) || 0,             // 2: match_num
+    matchTypeMap[data.matchType],                    // 3: match_type
+    allianceMap[data.alliance],                      // 4: alliance
+    data.scouter || 'NA',                            // 5: scouter
+    zoneMap[data.startingZone],                      // 6: start_zone
+    data.isActiveInAuto ? 1 : 0,                     // 7: auto_active
+    data.autoHang ? 1 : 0,                           // 8: auto_hang
+    data.autoFuelPoints,                             // 9: auto_pts
+    data.autoComments || '',                         // 10: auto_comm
+    data.teleopFuelPoints,                           // 11: tele_pts
+    data.teleopComments || '',                       // 12: tele_comm
+    data.climbLevel,                                 // 13: tele_hang
+    data.adv_field_role,                             // 14: adv_role
+    data.adv_broke,                                  // 15: adv_broke
+    data.adv_fixed,                                  // 16: adv_fixed
+    data.adv_chasis,                                 // 17: adv_chasis
+    data.adv_intake,                                 // 18: adv_intake
     data.adv_shooter.length > 0
       ? data.adv_shooter.sort((a, b) => a - b).join('-')
-      : "4",                                         // 13: adv_shooter
-    data.adv_climber,                                // 14: adv_climber
-    data.adv_trench,                                 // 15: adv_trench
-    hopperMap[data.adv_hopper_cap] ?? null,          // 16: adv_hoppercapacity
-    data.adv_broke,                                  // 17: adv_broke
-    data.adv_fixed                                   // 18: adv_fixed
+      : "4",                                         // 19: adv_shooter
+    data.adv_climber,                                // 20: adv_climber
+    hopperMap[data.adv_hopper_cap] ?? null,          // 21: adv_hoppercapacity
+    data.adv_trench,                                 // 22: adv_trench
+    data.comments || ''                              // 23: adv_comments
   ];
 };
 
@@ -111,31 +120,35 @@ export const decompressScoutingData = (data: any[]): Partial<ScoutingData> => {
   };
 
   return {
-    teamNumber: String(data[0] || ''),
-    matchNumber: String(data[1] || ''),
-    matchType: reverseMatchTypeMap[data[2]] || MatchType.QUALIFICATION,
-    alliance: reverseAllianceMap[data[3]] || Alliance.RED,
-    scouter: data[4] || '',
-    startingZone: reverseZoneMap[data[5]] || StartingZone.DEPOT,
-    isActiveInAuto: Boolean(data[6]),
-    autoHang: Boolean(data[7]),
-    autoFuelPoints: Number(data[8] || 0),
-    teleopFuelPoints: Number(data[9] || 0),
-    climbLevel: Number(data[10] || 0),
-    adv_chasis: Number(data[11] || -1),
-    adv_intake: Number(data[12] || -1),
-    adv_shooter: parseShooter(data[13]),
-    adv_climber: Number(data[14] || -1),
-    adv_trench: Number(data[15] || -1),
-    adv_hopper_cap: data[16] ? (reverseHopperMap[data[16]] ?? -1) : -1,
-    adv_broke: Number(data[17] || -1),
-    adv_fixed: Number(data[18] || -1),
+    // Generate a temporary ID for imported records
+    id: `imported_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
 
-    // Defaults for non-compressed fields
-    id: '',
-    autoComments: '',
-    teleopComments: '',
-    comments: '',
-    endgameScore: 0 // Recalculate if needed, but not in QR
+    // 0: timestamp is ignored
+    teamNumber: String(data[1] || ''),               // 1: team_num
+    matchNumber: String(data[2] || ''),              // 2: match_num
+    matchType: reverseMatchTypeMap[data[3]] || MatchType.QUALIFICATION, // 3: match_type
+    alliance: reverseAllianceMap[data[4]] || Alliance.RED, // 4: alliance
+    scouter: data[5] || '',                          // 5: scouter
+    startingZone: reverseZoneMap[data[6]] || StartingZone.DEPOT, // 6: start_zone
+    isActiveInAuto: Boolean(data[7]),                // 7: auto_active
+    autoHang: Boolean(data[8]),                      // 8: auto_hang
+    autoFuelPoints: Number(data[9] || 0),            // 9: auto_pts
+    autoComments: String(data[10] || ''),            // 10: auto_comm
+    teleopFuelPoints: Number(data[11] || 0),         // 11: tele_pts
+    teleopComments: String(data[12] || ''),          // 12: tele_comm
+    climbLevel: Number(data[13] || 0),               // 13: tele_hang
+    adv_field_role: Number(data[14] || -1),          // 14: adv_role
+    adv_broke: Number(data[15] || -1),               // 15: adv_broke
+    adv_fixed: Number(data[16] || -1),               // 16: adv_fixed
+    adv_chasis: Number(data[17] || -1),              // 17: adv_chasis
+    adv_intake: Number(data[18] || -1),              // 18: adv_intake
+    adv_shooter: parseShooter(data[19]),             // 19: adv_shooter
+    adv_climber: Number(data[20] || -1),             // 20: adv_climber
+    adv_hopper_cap: data[21] ? (reverseHopperMap[data[21]] ?? -1) : -1, // 21: adv_hoppercapacity
+    adv_trench: Number(data[22] || -1),              // 22: adv_trench
+    comments: String(data[23] || ''),                // 23: adv_comments
+
+    // Defaults for fields not in CSV
+    endgameScore: 0
   };
 };
