@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
-import { History, Trash2, ChevronLeft, Layers, AlertTriangle } from 'lucide-react';
+import { History, Trash2, ChevronLeft, Layers, AlertTriangle, Camera } from 'lucide-react';
 import { ScoutingData, Alliance } from '../types';
 import QRScanner from './QRScanner';
 import { compressScoutingData, decompressScoutingData } from '../utils/qrHelper';
@@ -15,15 +15,47 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
   const [showMaster, setShowMaster] = useState(false);
   const [showScanner, setShowScanner] = useState(false);
   const [confirmingId, setConfirmingId] = useState<string | null>(null);
+  const [confirmingClearAll, setConfirmingClearAll] = useState(false);
 
   const deleteItem = (id: string) => {
     setVault((prevVault) => prevVault.filter(item => item.id !== id));
     setConfirmingId(null);
   };
 
+  const clearAll = () => {
+    setVault([]);
+    setConfirmingClearAll(false);
+  };
+
   const getMasterData = () => {
     return vault.map(item => compressScoutingData(item));
   };
+
+  // Label Helpers
+  const getRoleLabel = (val: number) => ["SCORER", "FEEDER", "DEFENSE", "NONE"][val] || "N/A";
+  const getHopperLabel = (val: number) => ["0-20", "21-40", "41-60", "61+"][val] || "N/A";
+  const getChassisLabel = (val: number) => ["TANK", "SWERVE", "MECANUM", "CUSTOM"][val] || "N/A";
+  const getIntakeLabel = (val: number) => ["OVER BUMPER", "UNDER BUMPER", "NONE"][val] || "N/A";
+  const getTrenchLabel = (val: number) => ["TRENCH", "BUMP", "BOTH", "NONE"][val] || "N/A";
+  const getShooterLabels = (ids: number[]) => {
+    if (ids.length === 0) return "NONE";
+    if (ids.includes(4)) return "NONE";
+    const map: Record<number, string> = { 0: "TURRET", 1: "HOOD", 2: "DUAL", 3: "FIXED" };
+    return ids.map(id => map[id]).filter(Boolean).join(" + ");
+  };
+
+  const SectionHeader = ({ label }: { label: string }) => (
+    <h3 className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase mt-6 mb-2 ml-1">{label}</h3>
+  );
+
+  const SummaryItem = ({ label, value, colorClass = "text-white/70" }: { label: string, value: string | number | boolean, colorClass?: string }) => (
+    <div className="flex justify-between items-center py-2.5 border-b border-white/5">
+      <span className="text-[10px] font-tech text-white/20 uppercase tracking-widest">{label}</span>
+      <span className={`text-[11px] font-mono font-bold uppercase ${colorClass}`}>
+        {typeof value === 'boolean' ? (value ? 'YES' : 'NO') : value}
+      </span>
+    </div>
+  );
 
   const handleScan = (decodedText: string) => {
     try {
@@ -85,10 +117,41 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
           level="M"
         />
       </div>
-      <div className="bg-[#111] p-6 rounded-2xl border border-white/5 text-center">
-        <span className="text-[10px] font-tech text-white/30 uppercase block mb-1 tracking-widest">UNIT IDENTIFIED</span>
+      <div className="bg-[#111] p-6 rounded-2xl border border-white/5 text-center mb-6">
+        <span className="text-[11px] font-tech text-white/30 uppercase block mb-1 tracking-[0.2em]">UNIT IDENTIFIED</span>
         <div className="font-tech text-2xl uppercase tracking-tighter">TEAM {selected.teamNumber}</div>
         <div className="text-[10px] font-mono text-white/20 uppercase mt-1 tracking-widest">{selected.matchType} #{selected.matchNumber}</div>
+      </div>
+
+      <div className="space-y-2 pb-12">
+        <SectionHeader label="Autonomous Phase" />
+        <SummaryItem label="Active" value={selected.isActiveInAuto} />
+        <SummaryItem label="Auto Hang" value={selected.autoHang} />
+        <SummaryItem label="Fuel Points" value={selected.autoFuelPoints} colorClass="text-green-400" />
+
+        <SectionHeader label="Teleop Phase" />
+        <SummaryItem label="Fuel Points" value={selected.teleopFuelPoints} colorClass="text-green-400" />
+        <SummaryItem label="Climb Level" value={selected.climbLevel === 0 ? '0' : `L${selected.climbLevel}`} />
+
+        <SectionHeader label="Advanced Intel" />
+        <SummaryItem label="Role" value={getRoleLabel(selected.adv_field_role)} />
+        <SummaryItem label="Hopper Cap" value={getHopperLabel(selected.adv_hopper_cap)} />
+        <SummaryItem label="Chassis" value={getChassisLabel(selected.adv_chasis)} />
+        <SummaryItem label="Intake" value={getIntakeLabel(selected.adv_intake)} />
+        <SummaryItem label="Shooter" value={getShooterLabels(selected.adv_shooter)} />
+        <SummaryItem label="Obstacle Tech" value={getTrenchLabel(selected.adv_trench)} />
+        <SummaryItem label="Climber" value={selected.adv_climber === 1 ? 'YES' : selected.adv_climber === 0 ? 'NO' : 'N/A'} />
+        <SummaryItem label="Broke Down" value={selected.adv_broke === 1 ? 'YES' : selected.adv_broke === 0 ? 'NO' : 'N/A'} colorClass={selected.adv_broke === 1 ? 'text-red-500' : ''} />
+        <SummaryItem label="Fixed" value={selected.adv_fixed === 1 ? 'YES' : selected.adv_fixed === 0 ? 'NO' : 'N/A'} colorClass={selected.adv_fixed === 1 ? 'text-green-500' : ''} />
+
+        {selected.comments && (
+          <>
+            <SectionHeader label="Scouter Notes" />
+            <div className="p-4 bg-white/5 rounded-2xl border border-white/5 text-[11px] font-mono text-white/40 leading-relaxed italic">
+              "{selected.comments}"
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
@@ -109,7 +172,7 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
         />
       </div>
       <div className="bg-purple-500/10 p-6 rounded-2xl border border-purple-500/20 text-center">
-        <span className="text-[10px] font-tech text-purple-400/60 uppercase block mb-1 tracking-widest">MASTER SYNC PROTOCOL</span>
+        <span className="text-[11px] font-tech text-purple-400/60 uppercase block mb-1 tracking-[0.2em]">MASTER SYNC PROTOCOL</span>
         <div className="font-tech text-xl text-purple-400 uppercase tracking-widest">{vault.length} RECORDS COMPRESSED</div>
         <div className="text-[9px] font-mono text-purple-400/30 uppercase mt-2 leading-relaxed">THIS CODE CONTAINS DATA FOR ALL LOGGED MISSIONS IN THE CURRENT ARCHIVE.</div>
       </div>
@@ -124,7 +187,35 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
           <History size={16} className="text-white/20" />
           <h2 className="font-tech text-sm tracking-widest uppercase">Archive</h2>
         </div>
-        <span className="text-[10px] font-mono text-white/20 uppercase">{vault.length} UNITS LOGGED</span>
+        <div className="flex items-center gap-4">
+          {vault.length > 0 && (
+            confirmingClearAll ? (
+              <div className="flex items-center gap-3 animate-in slide-in-from-right-2 duration-200">
+                <button
+                  onClick={() => setConfirmingClearAll(false)}
+                  className="text-[10px] font-tech text-white/50 uppercase tracking-widest hover:text-white transition-colors bg-white/5 px-2 py-1 rounded-md"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={clearAll}
+                  className="text-[10px] font-tech text-red-400 uppercase tracking-widest hover:text-red-500 transition-colors bg-red-500/10 px-2 py-1 rounded-md border border-red-500/20"
+                >
+                  Confirm Erase
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => setConfirmingClearAll(true)}
+                className="flex items-center gap-1.5 text-[10px] font-tech text-white/40 uppercase tracking-widest hover:text-red-400 transition-colors group"
+              >
+                <Trash2 size={12} className="group-hover:text-red-400 transition-colors" />
+                Clear All
+              </button>
+            )
+          )}
+          <span className="text-[10px] font-mono text-white/20 uppercase">{vault.length} UNITS LOGGED</span>
+        </div>
       </div>
 
       <div className="grid grid-cols-2 gap-3 mb-4">
@@ -133,7 +224,7 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
           className="bg-white/5 border border-white/5 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 group active:bg-white/10 transition-all"
         >
           <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
-            <Trash2 size={16} className="rotate-180" /> {/* Using Trash as icon placeholder if Camera not avail, but better import Camera */}
+            <Camera size={16} />
           </div>
           <div className="font-tech text-[10px] tracking-widest uppercase">Scan Unit</div>
         </button>

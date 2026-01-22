@@ -28,7 +28,7 @@ const SetupPhase: React.FC<SetupPhaseProps> = ({ data, setData, onNext }) => {
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-[9px] font-tech text-white/40 tracking-widest uppercase">Team</label>
+              <label className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase ml-2">Team</label>
               <div className="bg-[#161616] rounded-2xl border border-white/5 h-16 flex items-center justify-center focus-within:border-white/20 transition-all">
                 <input
                   type="text"
@@ -42,7 +42,7 @@ const SetupPhase: React.FC<SetupPhaseProps> = ({ data, setData, onNext }) => {
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-[9px] font-tech text-white/40 tracking-widest uppercase">Match</label>
+              <label className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase ml-2">Match</label>
               <div className="bg-[#161616] rounded-2xl border border-white/5 h-16 flex items-center justify-center focus-within:border-white/20 transition-all">
                 <input
                   type="text"
@@ -58,7 +58,7 @@ const SetupPhase: React.FC<SetupPhaseProps> = ({ data, setData, onNext }) => {
           </div>
 
           <div className="space-y-2">
-            <label className="text-[9px] font-tech text-white/40 tracking-widest uppercase">Scouter ID</label>
+            <label className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase ml-2">Scouter ID</label>
             <div className="bg-[#161616] rounded-2xl border border-white/5 h-16 flex items-center justify-center focus-within:border-white/20 transition-all">
               <input
                 type="text"
@@ -73,7 +73,7 @@ const SetupPhase: React.FC<SetupPhaseProps> = ({ data, setData, onNext }) => {
 
         {/* Match Protocol */}
         <div className="space-y-2">
-          <label className="text-[10px] font-tech text-white/40 tracking-widest uppercase">Match Protocol</label>
+          <label className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase ml-2">Match Protocol</label>
           <div className="grid grid-cols-3 gap-2">
             {[MatchType.PRACTICE, MatchType.QUALIFICATION, MatchType.PLAYOFF].map((type) => (
               <button
@@ -92,7 +92,7 @@ const SetupPhase: React.FC<SetupPhaseProps> = ({ data, setData, onNext }) => {
 
         {/* Deployment Zone */}
         <div className="space-y-2">
-          <label className="text-[10px] font-tech text-white/40 tracking-widest uppercase">Deployment Zone</label>
+          <label className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase ml-2">Deployment Zone</label>
           <div className="grid grid-cols-3 gap-2">
             {[
               { id: StartingZone.DEPOT, num: '1', label: 'DEPOT' },

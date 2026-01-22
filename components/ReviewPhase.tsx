@@ -10,10 +10,10 @@ interface ReviewPhaseProps {
 }
 
 const ReviewPhase: React.FC<ReviewPhaseProps> = ({ data, setData, onNext, onBack }) => {
-  
+
   const SummaryItem = ({ label, value, colorClass = "text-white" }: { label: string, value: string | number | boolean, colorClass?: string }) => (
     <div className="flex justify-between items-center py-3 border-b border-white/5">
-      <span className="text-[10px] font-tech text-white/30 uppercase tracking-widest">{label}</span>
+      <span className="text-[11px] font-tech text-white/30 uppercase tracking-[0.2em]">{label}</span>
       <span className={`text-[11px] font-mono font-bold uppercase ${colorClass}`}>
         {typeof value === 'boolean' ? (value ? 'YES' : 'NO') : value}
       </span>
@@ -29,7 +29,7 @@ const ReviewPhase: React.FC<ReviewPhaseProps> = ({ data, setData, onNext, onBack
   const getChassisLabel = (val: number) => ["TANK", "SWERVE", "MECANUM", "CUSTOM"][val] || "N/A";
   const getIntakeLabel = (val: number) => ["OVER BUMPER", "UNDER BUMPER", "NONE"][val] || "N/A";
   const getTrenchLabel = (val: number) => ["TRENCH", "BUMP", "BOTH", "NONE"][val] || "N/A";
-  
+
   const getShooterLabels = (ids: number[]) => {
     if (ids.length === 0) return "NONE";
     if (ids.includes(4)) return "NONE";
@@ -45,16 +45,16 @@ const ReviewPhase: React.FC<ReviewPhaseProps> = ({ data, setData, onNext, onBack
       </div>
 
       <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar pb-6 space-y-2">
-        
+
         {/* MATCH METRICS */}
         <div className="bg-white/5 rounded-3xl p-6 border border-white/5 mb-4">
           <div className="flex justify-between items-end mb-4">
             <div>
-              <div className="text-[10px] font-tech text-white/30 uppercase tracking-widest mb-1">TEAM UNIT</div>
+              <div className="text-[11px] font-tech text-white/30 uppercase tracking-[0.2em] mb-1">TEAM UNIT</div>
               <div className="text-3xl font-tech tracking-tighter">{data.teamNumber}</div>
             </div>
             <div className="text-right">
-              <div className="text-[10px] font-tech text-white/30 uppercase tracking-widest mb-1">SCOUTER / MATCH</div>
+              <div className="text-[11px] font-tech text-white/30 uppercase tracking-[0.2em] mb-1">SCOUTER / MATCH</div>
               <div className="text-xl font-tech text-white/60">{data.scouter} <span className="text-xs text-white/30">#{data.matchNumber}</span></div>
             </div>
           </div>
@@ -83,15 +83,15 @@ const ReviewPhase: React.FC<ReviewPhaseProps> = ({ data, setData, onNext, onBack
         <SummaryItem label="Broke Down" value={data.adv_broke === 1 ? 'YES' : data.adv_broke === 0 ? 'NO' : 'N/A'} colorClass={data.adv_broke === 1 ? 'text-red-500' : ''} />
         <SummaryItem label="Fixed" value={data.adv_fixed === 1 ? 'YES' : data.adv_fixed === 0 ? 'NO' : 'N/A'} colorClass={data.adv_fixed === 1 ? 'text-green-500' : ''} />
       </div>
-      
+
       <div className="pt-6 flex gap-3 bg-[#0c0c0c] z-10">
-        <button 
+        <button
           onClick={onBack}
           className="w-[30%] py-5 rounded-full border border-white/10 text-white/40 font-tech text-[12px] tracking-[0.2em] active:scale-[0.98] transition-all uppercase"
         >
           Back
         </button>
-        <button 
+        <button
           onClick={onNext}
           className="flex-1 py-5 rounded-full bg-green-500 text-black font-tech text-[14px] tracking-[0.2em] flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(34,197,94,0.3)] active:scale-[0.98] transition-all uppercase"
         >
