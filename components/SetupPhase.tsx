@@ -11,8 +11,8 @@ interface SetupPhaseProps {
 const SetupPhase: React.FC<SetupPhaseProps> = ({ data, setData, onNext }) => {
   const updateVal = (key: keyof ScoutingData, val: any) => setData({ ...data, [key]: val });
 
-  const handleNumericInput = (key: keyof ScoutingData, value: string) => {
-    const numericValue = value.replace(/[^0-9]/g, '');
+  const handleNumericInput = (key: keyof ScoutingData, value: string, maxLength: number) => {
+    const numericValue = value.replace(/[^0-9]/g, '').slice(0, maxLength);
     updateVal(key, numericValue);
   };
 
@@ -30,13 +30,13 @@ const SetupPhase: React.FC<SetupPhaseProps> = ({ data, setData, onNext }) => {
             <div className="space-y-2">
               <label className="text-[9px] font-tech text-white/40 tracking-widest uppercase">Team</label>
               <div className="bg-[#161616] rounded-2xl border border-white/5 h-16 flex items-center justify-center focus-within:border-white/20 transition-all">
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   inputMode="numeric"
                   pattern="[0-9]*"
                   value={data.teamNumber}
                   placeholder="0"
-                  onChange={(e) => handleNumericInput('teamNumber', e.target.value)}
+                  onChange={(e) => handleNumericInput('teamNumber', e.target.value, 5)}
                   className="bg-transparent text-2xl font-tech text-center w-full focus:outline-none placeholder:text-white/5"
                 />
               </div>
@@ -44,24 +44,24 @@ const SetupPhase: React.FC<SetupPhaseProps> = ({ data, setData, onNext }) => {
             <div className="space-y-2">
               <label className="text-[9px] font-tech text-white/40 tracking-widest uppercase">Match</label>
               <div className="bg-[#161616] rounded-2xl border border-white/5 h-16 flex items-center justify-center focus-within:border-white/20 transition-all">
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   inputMode="numeric"
                   pattern="[0-9]*"
                   value={data.matchNumber}
                   placeholder="0"
-                  onChange={(e) => handleNumericInput('matchNumber', e.target.value)}
+                  onChange={(e) => handleNumericInput('matchNumber', e.target.value, 3)}
                   className="bg-transparent text-2xl font-tech text-center w-full focus:outline-none placeholder:text-white/5"
                 />
               </div>
             </div>
           </div>
-          
+
           <div className="space-y-2">
             <label className="text-[9px] font-tech text-white/40 tracking-widest uppercase">Scouter ID</label>
             <div className="bg-[#161616] rounded-2xl border border-white/5 h-16 flex items-center justify-center focus-within:border-white/20 transition-all">
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={data.scouter}
                 placeholder="INITIALS"
                 onChange={(e) => handleAlphaInput('scouter', e.target.value)}
@@ -79,11 +79,10 @@ const SetupPhase: React.FC<SetupPhaseProps> = ({ data, setData, onNext }) => {
               <button
                 key={type}
                 onClick={() => updateVal('matchType', type)}
-                className={`py-4 rounded-xl text-[10px] font-tech tracking-widest border transition-all ${
-                  data.matchType === type 
-                    ? 'bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.4)]' 
-                    : 'bg-[#161616] text-white/20 border-white/5'
-                }`}
+                className={`py-4 rounded-xl text-[10px] font-tech tracking-widest border transition-all ${data.matchType === type
+                  ? 'bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.4)]'
+                  : 'bg-[#161616] text-white/20 border-white/5'
+                  }`}
               >
                 {type === MatchType.QUALIFICATION ? 'QUAL' : type}
               </button>
@@ -103,11 +102,10 @@ const SetupPhase: React.FC<SetupPhaseProps> = ({ data, setData, onNext }) => {
               <button
                 key={zone.id}
                 onClick={() => updateVal('startingZone', zone.id)}
-                className={`py-4 rounded-2xl flex flex-col items-center justify-center transition-all border ${
-                  data.startingZone === zone.id 
-                    ? 'bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.3)]' 
-                    : 'bg-[#161616] text-white/20 border-white/5 active:border-white/10'
-                }`}
+                className={`py-4 rounded-2xl flex flex-col items-center justify-center transition-all border ${data.startingZone === zone.id
+                  ? 'bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.3)]'
+                  : 'bg-[#161616] text-white/20 border-white/5 active:border-white/10'
+                  }`}
               >
                 <span className="font-tech text-2xl font-bold leading-none">{zone.num}</span>
                 <span className={`text-[10px] font-tech tracking-wider mt-1 font-bold ${data.startingZone === zone.id ? 'opacity-100' : 'opacity-40'}`}>
@@ -120,23 +118,21 @@ const SetupPhase: React.FC<SetupPhaseProps> = ({ data, setData, onNext }) => {
 
         {/* Alliance Selection */}
         <div className="grid grid-cols-2 gap-4">
-          <button 
+          <button
             onClick={() => updateVal('alliance', Alliance.RED)}
-            className={`py-5 rounded-2xl font-tech text-sm tracking-widest border transition-all ${
-              data.alliance === Alliance.RED 
-                ? 'bg-red-500/10 border-red-500 text-red-500 shadow-[0_0_20px_rgba(239,68,68,0.2)]' 
-                : 'bg-[#161616] border-white/5 text-white/10'
-            }`}
+            className={`py-5 rounded-2xl font-tech text-sm tracking-widest border transition-all ${data.alliance === Alliance.RED
+              ? 'bg-red-500/10 border-red-500 text-red-500 shadow-[0_0_20px_rgba(239,68,68,0.2)]'
+              : 'bg-[#161616] border-white/5 text-white/10'
+              }`}
           >
             RED
           </button>
-          <button 
+          <button
             onClick={() => updateVal('alliance', Alliance.BLUE)}
-            className={`py-5 rounded-2xl font-tech text-sm tracking-widest border transition-all ${
-              data.alliance === Alliance.BLUE 
-                ? 'bg-blue-500/10 border-blue-500 text-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.2)]' 
-                : 'bg-[#161616] border-white/5 text-white/10'
-            }`}
+            className={`py-5 rounded-2xl font-tech text-sm tracking-widest border transition-all ${data.alliance === Alliance.BLUE
+              ? 'bg-blue-500/10 border-blue-500 text-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.2)]'
+              : 'bg-[#161616] border-white/5 text-white/10'
+              }`}
           >
             BLUE
           </button>
@@ -144,7 +140,7 @@ const SetupPhase: React.FC<SetupPhaseProps> = ({ data, setData, onNext }) => {
       </div>
 
       <div className="mt-auto pt-8">
-        <button 
+        <button
           onClick={onNext}
           disabled={!data.teamNumber || !data.matchNumber || !data.scouter}
           className="w-full py-5 rounded-full bg-white text-black font-tech text-[14px] tracking-[0.2em] flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(255,255,255,0.15)] disabled:opacity-20 active:scale-[0.98] transition-all uppercase"
