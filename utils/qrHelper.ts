@@ -130,23 +130,23 @@ export const decompressScoutingData = (data: any[]): Partial<ScoutingData> => {
     alliance: reverseAllianceMap[data[4]] || Alliance.RED, // 4: alliance
     scouter: data[5] || '',                          // 5: scouter
     startingZone: reverseZoneMap[data[6]] || StartingZone.DEPOT, // 6: start_zone
-    isActiveInAuto: Boolean(data[7]),                // 7: auto_active
-    autoHang: Boolean(data[8]),                      // 8: auto_hang
-    autoFuelPoints: Number(data[9] || 0),            // 9: auto_pts
-    autoComments: String(data[10] || ''),            // 10: auto_comm
-    teleopFuelPoints: Number(data[11] || 0),         // 11: tele_pts
-    teleopComments: String(data[12] || ''),          // 12: tele_comm
-    climbLevel: Number(data[13] || 0),               // 13: tele_hang
-    adv_field_role: Number(data[14] || -1),          // 14: adv_role
-    adv_broke: Number(data[15] || -1),               // 15: adv_broke
-    adv_fixed: Number(data[16] || -1),               // 16: adv_fixed
-    adv_chasis: Number(data[17] || -1),              // 17: adv_chasis
-    adv_intake: Number(data[18] || -1),              // 18: adv_intake
+    isActiveInAuto: data[7] === 1 || data[7] === true, // 7: auto_active
+    autoHang: data[8] === 1 || data[8] === true,       // 8: auto_hang
+    autoFuelPoints: Number(data[9] ?? 0),            // 9: auto_pts
+    autoComments: String(data[10] ?? ''),            // 10: auto_comm
+    teleopFuelPoints: Number(data[11] ?? 0),         // 11: tele_pts
+    teleopComments: String(data[12] ?? ''),          // 12: tele_comm
+    climbLevel: Number(data[13] ?? 0),               // 13: tele_hang
+    adv_field_role: (data[14] !== undefined && data[14] !== null) ? Number(data[14]) : -1, // 14: adv_role
+    adv_broke: (data[15] !== undefined && data[15] !== null) ? Number(data[15]) : -1,      // 15: adv_broke
+    adv_fixed: (data[16] !== undefined && data[16] !== null) ? Number(data[16]) : -1,      // 16: adv_fixed
+    adv_chasis: (data[17] !== undefined && data[17] !== null) ? Number(data[17]) : -1,     // 17: adv_chasis
+    adv_intake: (data[18] !== undefined && data[18] !== null) ? Number(data[18]) : -1,     // 18: adv_intake
     adv_shooter: parseShooter(data[19]),             // 19: adv_shooter
-    adv_climber: Number(data[20] || -1),             // 20: adv_climber
-    adv_hopper_cap: data[21] ? (reverseHopperMap[data[21]] ?? -1) : -1, // 21: adv_hoppercapacity
-    adv_trench: Number(data[22] || -1),              // 22: adv_trench
-    comments: String(data[23] || ''),                // 23: adv_comments
+    adv_climber: (data[20] !== undefined && data[20] !== null) ? Number(data[20]) : -1,    // 20: adv_climber
+    adv_hopper_cap: (data[21] !== undefined && data[21] !== null) ? (reverseHopperMap[data[21]] ?? -1) : -1, // 21: adv_hoppercapacity
+    adv_trench: (data[22] !== undefined && data[22] !== null) ? Number(data[22]) : -1,     // 22: adv_trench
+    comments: String(data[23] ?? ''),                // 23: adv_comments
 
     // Defaults for fields not in CSV
     endgameScore: 0
