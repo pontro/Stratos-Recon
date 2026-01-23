@@ -70,10 +70,50 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
     setTimeout(() => setExportStatus(''), 3000);
   };
 
-  // iOS Placeholder Handler
+  // iOS Export Handler - Downloads CSV file
   const handleIOSExport = () => {
-    // No-op placeholder for iOS
-    // Future implementation will go here
+    if (vault.length === 0) {
+      setExportStatus('No data to export');
+      setTimeout(() => setExportStatus(''), 2000);
+      return;
+    }
+
+    setExportStatus('Generating CSV...');
+
+    try {
+      // Generate CSV content
+      const csvContent = generateCSV(vault);
+
+      // Create a Blob from the CSV content
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+
+      // Create a download link
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+
+      // Generate filename with timestamp
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+      const filename = `scouting_data_${timestamp}.csv`;
+
+      link.setAttribute('href', url);
+      link.setAttribute('download', filename);
+      link.style.visibility = 'hidden';
+
+      // Trigger download
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // Clean up the URL object
+      URL.revokeObjectURL(url);
+
+      setExportStatus('CSV downloaded successfully');
+      setTimeout(() => setExportStatus(''), 3000);
+    } catch (error) {
+      console.error('[iOS Export] Error:', error);
+      setExportStatus('Export failed');
+      setTimeout(() => setExportStatus(''), 3000);
+    }
   };
 
   // Label Helpers
@@ -374,16 +414,12 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
           ) : platform === 'ios' ? (
             <button
               onClick={handleIOSExport}
-              disabled
-              className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 flex items-center justify-center gap-3 opacity-40 cursor-not-allowed"
+              className="w-full bg-blue-500/10 border border-blue-500/20 rounded-2xl p-4 flex items-center justify-center gap-3 group active:bg-blue-500/20 transition-all"
             >
-              <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/40">
+              <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
                 <Download size={16} />
               </div>
-              <div className="flex flex-col items-center gap-1">
-                <div className="font-tech text-[11px] tracking-widest uppercase text-white/40">Export CSV</div>
-                <div className="font-mono text-[8px] text-white/20 uppercase tracking-wider">Coming Soon</div>
-              </div>
+              <div className="font-tech text-[11px] tracking-widest uppercase text-blue-400">Download CSV</div>
             </button>
           ) : null}
           {exportStatus && (
