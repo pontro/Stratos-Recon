@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
-import { History, Trash2, ChevronLeft, Layers, AlertTriangle, Camera } from 'lucide-react';
+import { History, Trash2, ChevronLeft, Layers, AlertTriangle, Camera, Upload, Download } from 'lucide-react';
 import { ScoutingData, Alliance } from '../types';
 import QRScanner from './QRScanner';
 import { compressScoutingData, decompressScoutingData } from '../utils/qrHelper';
+import { detectPlatform, Platform } from '../utils/platformDetector';
+import { generateCSV, pushCSVToPC, getEndpoint } from '../utils/csvExporter';
 
 interface VaultTabProps {
   vault: ScoutingData[];
@@ -16,6 +18,9 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
   const [showScanner, setShowScanner] = useState(false);
   const [confirmingId, setConfirmingId] = useState<string | null>(null);
   const [confirmingClearAll, setConfirmingClearAll] = useState(false);
+  const [confirmingExport, setConfirmingExport] = useState(false);
+  const [platform, setPlatform] = useState<Platform>('unknown');
+  const [exportStatus, setExportStatus] = useState<string>('');
 
   const deleteItem = (id: string) => {
     setVault((prevVault) => prevVault.filter(item => item.id !== id));
@@ -29,6 +34,35 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
 
   const getMasterData = () => {
     return vault.map(item => compressScoutingData(item));
+  };
+
+  // Detect platform on mount
+  useEffect(() => {
+    setPlatform(detectPlatform());
+  }, []);
+
+  // Android Export Handler
+  const handleAndroidExport = async () => {
+    if (vault.length === 0) {
+      setExportStatus('No data to export');
+      setTimeout(() => setExportStatus(''), 2000);
+      return;
+    }
+
+    setConfirmingExport(false);
+    setExportStatus('Pushing CSV...');
+    const csvContent = generateCSV(vault);
+    const endpoint = getEndpoint();
+    const result = await pushCSVToPC(csvContent, endpoint);
+
+    setExportStatus(result.message);
+    setTimeout(() => setExportStatus(''), 3000);
+  };
+
+  // iOS Placeholder Handler
+  const handleIOSExport = () => {
+    // No-op placeholder for iOS
+    // Future implementation will go here
   };
 
   // Label Helpers
@@ -240,6 +274,62 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
           </button>
         )}
       </div>
+
+      {/* Export Button - Platform Conditional */}
+      {vault.length > 0 && (
+        <div className="mb-4">
+          {platform === 'android' ? (
+            confirmingExport ? (
+              <div className="w-full bg-green-500/10 border border-green-500/20 rounded-2xl p-4 flex items-center justify-between">
+                <span className="text-[10px] font-tech text-green-400/80 uppercase tracking-widest">Push {vault.length} record{vault.length !== 1 ? 's' : ''} to PC?</span>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setConfirmingExport(false)}
+                    className="px-3 py-2 text-[8px] font-tech text-white/40 border border-white/10 rounded-lg uppercase tracking-widest active:bg-white/5"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleAndroidExport}
+                    className="px-3 py-2 text-[8px] font-tech bg-green-500 text-white rounded-lg uppercase tracking-widest shadow-[0_0_10px_rgba(34,197,94,0.3)] active:scale-95 transition-all"
+                  >
+                    Confirm
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <button
+                onClick={() => setConfirmingExport(true)}
+                className="w-full bg-green-500/10 border border-green-500/20 rounded-2xl p-4 flex items-center justify-center gap-3 group active:bg-green-500/20 transition-all"
+              >
+                <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">
+                  <Upload size={16} />
+                </div>
+                <div className="font-tech text-[11px] tracking-widest uppercase text-green-400">Push CSV to PC</div>
+              </button>
+            )
+          ) : platform === 'ios' ? (
+            <button
+              onClick={handleIOSExport}
+              disabled
+              className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 flex items-center justify-center gap-3 opacity-40 cursor-not-allowed"
+            >
+              <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/40">
+                <Download size={16} />
+              </div>
+              <div className="flex flex-col items-center gap-1">
+                <div className="font-tech text-[11px] tracking-widest uppercase text-white/40">Export CSV</div>
+                <div className="font-mono text-[8px] text-white/20 uppercase tracking-wider">Coming Soon</div>
+              </div>
+            </button>
+          ) : null}
+          {exportStatus && (
+            <div className="mt-2 text-center text-[10px] font-mono text-white/60 animate-in fade-in duration-200">
+              {exportStatus}
+            </div>
+          )}
+        </div>
+      )}
 
       {vault.length === 0 ? (
         <div className="h-64 flex flex-col items-center justify-center text-white/10 gap-4">
