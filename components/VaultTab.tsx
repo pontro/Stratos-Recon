@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
-import { History, Trash2, ChevronLeft, Layers, AlertTriangle, Camera, Upload, Download } from 'lucide-react';
+import { History, Trash2, ChevronLeft, Layers, AlertTriangle, Camera, Upload, Download, Settings } from 'lucide-react';
 import { ScoutingData, Alliance } from '../types';
 import QRScanner from './QRScanner';
 import { compressScoutingData, decompressScoutingData } from '../utils/qrHelper';
 import { detectPlatform, Platform } from '../utils/platformDetector';
-import { generateCSV, pushCSVToPC, getEndpoint } from '../utils/csvExporter';
+import { generateCSV, pushCSVToPC, getEndpoint, setEndpoint } from '../utils/csvExporter';
 
 interface VaultTabProps {
   vault: ScoutingData[];
@@ -16,11 +16,13 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
   const [selected, setSelected] = useState<ScoutingData | null>(null);
   const [showMaster, setShowMaster] = useState(false);
   const [showScanner, setShowScanner] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const [confirmingId, setConfirmingId] = useState<string | null>(null);
   const [confirmingClearAll, setConfirmingClearAll] = useState(false);
   const [confirmingExport, setConfirmingExport] = useState(false);
   const [platform, setPlatform] = useState<Platform>('unknown');
   const [exportStatus, setExportStatus] = useState<string>('');
+  const [endpointInput, setEndpointInput] = useState<string>('');
 
   const deleteItem = (id: string) => {
     setVault((prevVault) => prevVault.filter(item => item.id !== id));
@@ -39,7 +41,16 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
   // Detect platform on mount
   useEffect(() => {
     setPlatform(detectPlatform());
+    setEndpointInput(getEndpoint());
   }, []);
+
+  // Save endpoint settings
+  const handleSaveEndpoint = () => {
+    if (endpointInput.trim()) {
+      setEndpoint(endpointInput.trim());
+      setShowSettings(false);
+    }
+  };
 
   // Android Export Handler
   const handleAndroidExport = async () => {
@@ -136,6 +147,49 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
     />
   );
 
+  // View: Settings
+  if (showSettings) return (
+    <div className="animate-in fade-in zoom-in-95 duration-300">
+      <button onClick={() => setShowSettings(false)} className="mb-6 flex items-center gap-2 text-[10px] font-tech text-white/40 uppercase">
+        <ChevronLeft size={14} /> BACK TO ARCHIVE
+      </button>
+
+      <div className="bg-[#111] p-6 rounded-2xl border border-white/5">
+        <div className="flex items-center gap-2 mb-6">
+          <Settings size={16} className="text-white/40" />
+          <h3 className="font-tech text-sm tracking-widest uppercase">Export Settings</h3>
+        </div>
+
+        <div className="space-y-4">
+          <div>
+            <label className="text-[10px] font-tech text-white/40 uppercase tracking-widest block mb-2">
+              PC Endpoint URL
+            </label>
+            <input
+              type="text"
+              value={endpointInput}
+              onChange={(e) => setEndpointInput(e.target.value)}
+              placeholder="http://192.168.1.100:8080/upload"
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-[11px] font-mono text-white/80 placeholder:text-white/20 focus:outline-none focus:border-green-500/50 transition-colors"
+            />
+            <p className="text-[9px] font-mono text-white/30 mt-2 leading-relaxed">
+              Enter the IP address and port of your PC running the CSV receiver server.
+              Example: http://192.168.1.100:8080/upload
+            </p>
+          </div>
+
+          <button
+            onClick={handleSaveEndpoint}
+            disabled={!endpointInput.trim()}
+            className="w-full bg-green-500 text-white font-tech text-[10px] uppercase tracking-widest py-3 rounded-xl disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 transition-all shadow-[0_0_15px_rgba(34,197,94,0.3)]"
+          >
+            Save Endpoint
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
   // View: Single QR for one match
   if (selected) return (
     <div className="animate-in fade-in zoom-in-95 duration-300">
@@ -222,6 +276,15 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
           <h2 className="font-tech text-sm tracking-widest uppercase">Archive</h2>
         </div>
         <div className="flex items-center gap-4">
+          {platform === 'android' && (
+            <button
+              onClick={() => setShowSettings(true)}
+              className="flex items-center gap-1.5 text-[10px] font-tech text-white/40 uppercase tracking-widest hover:text-green-400 transition-colors group"
+            >
+              <Settings size={12} className="group-hover:text-green-400 transition-colors" />
+              Settings
+            </button>
+          )}
           {vault.length > 0 && (
             confirmingClearAll ? (
               <div className="flex items-center gap-3 animate-in slide-in-from-right-2 duration-200">

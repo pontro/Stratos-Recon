@@ -108,20 +108,16 @@ export const pushCSVToPC = async (
 
 /**
  * Gets the current configured endpoint
- * Can be extended to read from localStorage or environment
+ * Reads from localStorage or returns default
  */
 export const getEndpoint = (): string => {
-    // Future: Read from localStorage or environment variable
-    // For now, return default
-    return DEFAULT_ENDPOINT;
+    const stored = localStorage.getItem('csv_endpoint');
+    return stored || DEFAULT_ENDPOINT;
 };
 
 /**
- * Sets a custom endpoint
- * Can be extended to persist to localStorage
+ * Sets a custom endpoint and persists to localStorage
  */
 export const setEndpoint = (endpoint: string): void => {
-    // Future: Save to localStorage
-    // For now, this is a placeholder
-    console.log('Endpoint set to:', endpoint);
+    localStorage.setItem('csv_endpoint', endpoint);
 };
