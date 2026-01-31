@@ -10,13 +10,14 @@ import { generateCSV, pushCSVToPC, getEndpoint, setEndpoint } from '../utils/csv
 interface VaultTabProps {
   vault: ScoutingData[];
   setVault: React.Dispatch<React.SetStateAction<ScoutingData[]>>;
+  showSettings: boolean;
+  setShowSettings: (show: boolean) => void;
 }
 
-const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
+const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault, showSettings, setShowSettings }) => {
   const [selected, setSelected] = useState<ScoutingData | null>(null);
   const [showMaster, setShowMaster] = useState(false);
   const [showScanner, setShowScanner] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
   const [confirmingId, setConfirmingId] = useState<string | null>(null);
   const [confirmingClearAll, setConfirmingClearAll] = useState(false);
   const [confirmingExport, setConfirmingExport] = useState(false);
@@ -130,12 +131,12 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
   };
 
   const SectionHeader = ({ label }: { label: string }) => (
-    <h3 className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase mt-6 mb-2 ml-1">{label}</h3>
+    <h3 className="text-[11px] font-tech font-bold text-white/40 tracking-[0.2em] uppercase mt-6 mb-2 ml-1">{label}</h3>
   );
 
   const SummaryItem = ({ label, value, colorClass = "text-white/70" }: { label: string, value: string | number | boolean, colorClass?: string }) => (
     <div className="flex justify-between items-center py-2.5 border-b border-white/5">
-      <span className="text-[10px] font-tech text-white/20 uppercase tracking-widest">{label}</span>
+      <span className="text-[10px] font-tech font-bold text-white/20 uppercase tracking-widest">{label}</span>
       <span className={`text-[11px] font-mono font-bold uppercase ${colorClass}`}>
         {typeof value === 'boolean' ? (value ? 'YES' : 'NO') : value}
       </span>
@@ -197,7 +198,7 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
       <div className="bg-[#111] p-6 rounded-2xl border border-white/5">
         <div className="flex items-center gap-2 mb-6">
           <Settings size={16} className="text-white/40" />
-          <h3 className="font-tech text-sm tracking-widest uppercase">Export Settings</h3>
+          <h3 className="font-tech font-bold text-sm tracking-widest uppercase">Export Settings</h3>
         </div>
 
         <div className="space-y-4">
@@ -246,7 +247,7 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
         />
       </div>
       <div className="bg-[#111] p-6 rounded-2xl border border-white/5 text-center mb-6">
-        <span className="text-[11px] font-tech text-white/30 uppercase block mb-1 tracking-[0.2em]">UNIT IDENTIFIED</span>
+        <span className="text-[11px] font-tech font-bold text-white/30 uppercase block mb-1 tracking-[0.2em]">UNIT IDENTIFIED</span>
         <div className="font-tech text-2xl uppercase tracking-tighter">TEAM {selected.teamNumber}</div>
         <div className="text-[10px] font-mono text-white/20 uppercase mt-1 tracking-widest">{selected.matchType} #{selected.matchNumber}</div>
       </div>
@@ -300,7 +301,7 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
         />
       </div>
       <div className="bg-purple-500/10 p-6 rounded-2xl border border-purple-500/20 text-center">
-        <span className="text-[11px] font-tech text-purple-400/60 uppercase block mb-1 tracking-[0.2em]">MASTER SYNC PROTOCOL</span>
+        <span className="text-[11px] font-tech font-bold text-purple-400/60 uppercase block mb-1 tracking-[0.2em]">MASTER SYNC PROTOCOL</span>
         <div className="font-tech text-xl text-purple-400 uppercase tracking-widest">{vault.length} RECORDS COMPRESSED</div>
         <div className="text-[9px] font-mono text-purple-400/30 uppercase mt-2 leading-relaxed">THIS CODE CONTAINS DATA FOR ALL LOGGED MISSIONS IN THE CURRENT ARCHIVE.</div>
       </div>
@@ -313,18 +314,9 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
       <div className="flex justify-between items-center mb-2">
         <div className="flex items-center gap-2">
           <History size={16} className="text-white/20" />
-          <h2 className="font-tech text-sm tracking-widest uppercase">Archive</h2>
+          <h2 className="font-tech font-bold text-sm tracking-widest uppercase">Archive</h2>
         </div>
         <div className="flex items-center gap-4">
-          {platform === 'android' && (
-            <button
-              onClick={() => setShowSettings(true)}
-              className="flex items-center gap-1.5 text-[10px] font-tech text-white/40 uppercase tracking-widest hover:text-green-400 transition-colors group"
-            >
-              <Settings size={12} className="group-hover:text-green-400 transition-colors" />
-              Settings
-            </button>
-          )}
           {vault.length > 0 && (
             confirmingClearAll ? (
               <div className="flex items-center gap-3 animate-in slide-in-from-right-2 duration-200">
@@ -363,7 +355,7 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
           <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
             <Camera size={16} />
           </div>
-          <div className="font-tech text-[10px] tracking-widest uppercase">Scan Unit</div>
+          <div className="font-tech font-bold text-[10px] tracking-widest uppercase">Scan Unit</div>
         </button>
         {vault.length > 0 && (
           <button
@@ -373,7 +365,7 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
             <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400">
               <Layers size={16} />
             </div>
-            <div className="font-tech text-[10px] tracking-widest uppercase">Master QR</div>
+            <div className="font-tech font-bold text-[10px] tracking-widest uppercase">Master QR</div>
           </button>
         )}
       </div>
@@ -381,20 +373,61 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
       {/* Export Button - Platform Conditional */}
       {vault.length > 0 && (
         <div className="mb-4">
-          {platform === 'android' ? (
+          {platform === 'pc' ? (
+            <div className="space-y-3">
+              {confirmingExport ? (
+                <div className="w-full bg-green-500/10 border border-green-500/20 rounded-2xl p-4 flex items-center justify-between">
+                  <span className="text-[10px] font-tech font-bold text-green-400/80 uppercase tracking-widest">Push {vault.length} record{vault.length !== 1 ? 's' : ''} to PC?</span>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setConfirmingExport(false)}
+                      className="px-3 py-2 text-[8px] font-tech font-bold text-white/40 border border-white/10 rounded-lg uppercase tracking-widest active:bg-white/5"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleAndroidExport}
+                      className="px-3 py-2 text-[8px] font-tech font-bold bg-green-500 text-white rounded-lg uppercase tracking-widest shadow-[0_0_10px_rgba(34,197,94,0.3)] active:scale-95 transition-all"
+                    >
+                      Confirm
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setConfirmingExport(true)}
+                  className="w-full bg-green-500/10 border border-green-500/20 rounded-2xl p-4 flex items-center justify-center gap-3 group active:bg-green-500/20 transition-all font-bold"
+                >
+                  <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">
+                    <Upload size={16} />
+                  </div>
+                  <div className="font-tech font-bold text-[11px] tracking-widest uppercase text-green-400">Push CSV to PC</div>
+                </button>
+              )}
+              <button
+                onClick={handleIOSExport}
+                className="w-full bg-blue-500/10 border border-blue-500/20 rounded-2xl p-4 flex items-center justify-center gap-3 group active:bg-blue-500/20 transition-all font-bold"
+              >
+                <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
+                  <Download size={16} />
+                </div>
+                <div className="font-tech font-bold text-[11px] tracking-widest uppercase text-blue-400">Download CSV</div>
+              </button>
+            </div>
+          ) : platform === 'android' ? (
             confirmingExport ? (
               <div className="w-full bg-green-500/10 border border-green-500/20 rounded-2xl p-4 flex items-center justify-between">
-                <span className="text-[10px] font-tech text-green-400/80 uppercase tracking-widest">Push {vault.length} record{vault.length !== 1 ? 's' : ''} to PC?</span>
+                <span className="text-[10px] font-tech font-bold text-green-400/80 uppercase tracking-widest">Push {vault.length} record{vault.length !== 1 ? 's' : ''} to PC?</span>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setConfirmingExport(false)}
-                    className="px-3 py-2 text-[8px] font-tech text-white/40 border border-white/10 rounded-lg uppercase tracking-widest active:bg-white/5"
+                    className="px-3 py-2 text-[8px] font-tech font-bold text-white/40 border border-white/10 rounded-lg uppercase tracking-widest active:bg-white/5"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleAndroidExport}
-                    className="px-3 py-2 text-[8px] font-tech bg-green-500 text-white rounded-lg uppercase tracking-widest shadow-[0_0_10px_rgba(34,197,94,0.3)] active:scale-95 transition-all"
+                    className="px-3 py-2 text-[8px] font-tech font-bold bg-green-500 text-white rounded-lg uppercase tracking-widest shadow-[0_0_10px_rgba(34,197,94,0.3)] active:scale-95 transition-all"
                   >
                     Confirm
                   </button>
@@ -408,18 +441,18 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault }) => {
                 <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">
                   <Upload size={16} />
                 </div>
-                <div className="font-tech text-[11px] tracking-widest uppercase text-green-400">Push CSV to PC</div>
+                <div className="font-tech font-bold text-[11px] tracking-widest uppercase text-green-400">Push CSV to PC</div>
               </button>
             )
           ) : platform === 'ios' ? (
             <button
               onClick={handleIOSExport}
-              className="w-full bg-blue-500/10 border border-blue-500/20 rounded-2xl p-4 flex items-center justify-center gap-3 group active:bg-blue-500/20 transition-all"
+              className="w-full bg-blue-500/10 border border-blue-500/20 rounded-2xl p-4 flex items-center justify-center gap-3 group active:bg-blue-500/20 transition-all font-bold"
             >
               <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
                 <Download size={16} />
               </div>
-              <div className="font-tech text-[11px] tracking-widest uppercase text-blue-400">Download CSV</div>
+              <div className="font-tech font-bold text-[11px] tracking-widest uppercase text-blue-400">Download CSV</div>
             </button>
           ) : null}
           {exportStatus && (

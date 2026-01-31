@@ -40,17 +40,17 @@ const AutoPhase: React.FC<AutoPhaseProps> = ({ data, setData, onNext, onBack }) 
         <div className="space-y-8">
           {/* Active Toggle */}
           <div className="space-y-3">
-            <label className="text-[11px] font-tech tracking-[0.2em] uppercase text-white/40 ml-2">Active in Auto?</label>
+            <label className="text-[11px] font-tech font-bold tracking-[0.2em] uppercase text-white/40 ml-2">Active in Auto?</label>
             <div className="flex bg-[#111] rounded-3xl p-2 border border-white/5 h-20">
               <button
                 onClick={() => setIsActive(true)}
-                className={`flex-1 rounded-2xl text-sm font-tech tracking-widest transition-all ${data.isActiveInAuto ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)] scale-[1.02]' : 'text-white/20'}`}
+                className={`flex-1 rounded-2xl text-sm font-tech font-bold tracking-widest transition-all ${data.isActiveInAuto ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)] scale-[1.02]' : 'text-white/20'}`}
               >
                 YES
               </button>
               <button
                 onClick={() => setIsActive(false)}
-                className={`flex-1 rounded-2xl text-sm font-tech tracking-widest transition-all ${!data.isActiveInAuto ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)] scale-[1.02]' : 'text-white/20'}`}
+                className={`flex-1 rounded-2xl text-sm font-tech font-bold tracking-widest transition-all ${!data.isActiveInAuto ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)] scale-[1.02]' : 'text-white/20'}`}
               >
                 NO
               </button>
@@ -61,7 +61,7 @@ const AutoPhase: React.FC<AutoPhaseProps> = ({ data, setData, onNext, onBack }) 
             <div className="space-y-8 animate-in fade-in slide-in-from-top-2 duration-300">
               {/* Autonomous Hang Toggle */}
               <div className="space-y-3">
-                <label className="text-[11px] font-tech tracking-[0.2em] uppercase text-white/40 ml-2">Autonomous Hang?</label>
+                <label className="text-[11px] font-tech font-bold tracking-[0.2em] uppercase text-white/40 ml-2">Autonomous Hang?</label>
                 <div className="flex bg-[#111] rounded-3xl p-2 border border-white/5 h-20">
                   <button
                     onClick={() => setData({ ...data, autoHang: true })}
@@ -80,7 +80,7 @@ const AutoPhase: React.FC<AutoPhaseProps> = ({ data, setData, onNext, onBack }) 
 
               {/* Fuel Points Counter */}
               <div className="space-y-3">
-                <label className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase ml-2">Auto Fuel Points</label>
+                <label className="text-[11px] font-tech font-bold text-white/40 tracking-[0.2em] uppercase ml-2">Auto Fuel Points</label>
                 <div className="flex items-center gap-2 h-20">
                   <button
                     onClick={() => setData({ ...data, autoFuelPoints: Math.max(0, data.autoFuelPoints - 1) })}
@@ -131,13 +131,13 @@ const AutoPhase: React.FC<AutoPhaseProps> = ({ data, setData, onNext, onBack }) 
       <div className="mt-auto pt-6 flex gap-3">
         <button
           onClick={onBack}
-          className="w-[30%] py-5 rounded-full border border-white/10 text-white/40 font-tech text-[12px] tracking-[0.2em] active:scale-[0.98] transition-all uppercase"
+          className="w-[30%] py-5 rounded-full border border-white/10 text-white/40 font-tech font-black text-[12px] tracking-[0.2em] active:scale-[0.98] transition-all uppercase"
         >
           Back
         </button>
         <button
           onClick={onNext}
-          className="flex-1 py-5 rounded-full bg-white text-black font-tech text-[14px] tracking-[0.2em] flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(255,255,255,0.15)] active:scale-[0.98] transition-all uppercase"
+          className="flex-1 py-5 rounded-full bg-white text-black font-tech font-black text-[14px] tracking-[0.2em] flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(255,255,255,0.15)] active:scale-[0.98] transition-all uppercase"
         >
           Next Phase
           <ChevronRight size={18} />

@@ -28,7 +28,7 @@ const SetupPhase: React.FC<SetupPhaseProps> = ({ data, setData, onNext }) => {
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase ml-2">Team</label>
+              <label className="text-[11px] font-tech font-bold text-white/40 tracking-[0.2em] uppercase ml-2">Team</label>
               <div className="bg-[#161616] rounded-2xl border border-white/5 h-16 flex items-center justify-center focus-within:border-white/20 transition-all">
                 <input
                   type="text"
@@ -42,7 +42,7 @@ const SetupPhase: React.FC<SetupPhaseProps> = ({ data, setData, onNext }) => {
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase ml-2">Match</label>
+              <label className="text-[11px] font-tech font-bold text-white/40 tracking-[0.2em] uppercase ml-2">Match</label>
               <div className="bg-[#161616] rounded-2xl border border-white/5 h-16 flex items-center justify-center focus-within:border-white/20 transition-all">
                 <input
                   type="text"
@@ -58,7 +58,7 @@ const SetupPhase: React.FC<SetupPhaseProps> = ({ data, setData, onNext }) => {
           </div>
 
           <div className="space-y-2">
-            <label className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase ml-2">Scouter ID</label>
+            <label className="text-[11px] font-tech font-bold text-white/40 tracking-[0.2em] uppercase ml-2">Scouter ID</label>
             <div className="bg-[#161616] rounded-2xl border border-white/5 h-16 flex items-center justify-center focus-within:border-white/20 transition-all">
               <input
                 type="text"
@@ -73,13 +73,13 @@ const SetupPhase: React.FC<SetupPhaseProps> = ({ data, setData, onNext }) => {
 
         {/* Match Protocol */}
         <div className="space-y-2">
-          <label className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase ml-2">Match Protocol</label>
+          <label className="text-[11px] font-tech font-bold text-white/40 tracking-[0.2em] uppercase ml-2">Match Protocol</label>
           <div className="grid grid-cols-3 gap-2">
             {[MatchType.PRACTICE, MatchType.QUALIFICATION, MatchType.PLAYOFF].map((type) => (
               <button
                 key={type}
                 onClick={() => updateVal('matchType', type)}
-                className={`py-4 rounded-xl text-[10px] font-tech tracking-widest border transition-all ${data.matchType === type
+                className={`py-4 rounded-xl text-[10px] font-tech font-bold tracking-widest border transition-all ${data.matchType === type
                   ? 'bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.4)]'
                   : 'bg-[#161616] text-white/20 border-white/5'
                   }`}
@@ -92,7 +92,7 @@ const SetupPhase: React.FC<SetupPhaseProps> = ({ data, setData, onNext }) => {
 
         {/* Deployment Zone */}
         <div className="space-y-2">
-          <label className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase ml-2">Deployment Zone</label>
+          <label className="text-[11px] font-tech font-bold text-white/40 tracking-[0.2em] uppercase ml-2">Deployment Zone</label>
           <div className="grid grid-cols-3 gap-2">
             {[
               { id: StartingZone.DEPOT, num: '1', label: 'DEPOT' },
@@ -143,7 +143,7 @@ const SetupPhase: React.FC<SetupPhaseProps> = ({ data, setData, onNext }) => {
         <button
           onClick={onNext}
           disabled={!data.teamNumber || !data.matchNumber || !data.scouter}
-          className="w-full py-5 rounded-full bg-white text-black font-tech text-[14px] tracking-[0.2em] flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(255,255,255,0.15)] disabled:opacity-20 active:scale-[0.98] transition-all uppercase"
+          className="w-full py-5 rounded-full bg-white text-black font-tech font-black text-[14px] tracking-[0.2em] flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(255,255,255,0.15)] disabled:opacity-20 active:scale-[0.98] transition-all uppercase"
         >
           INITIATE MISSION
           <ChevronRight size={18} />

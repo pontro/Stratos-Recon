@@ -76,8 +76,8 @@ const AdvancedPhase: React.FC<AdvancedPhaseProps> = ({ data, setData, onNext, on
     <button
       onClick={onClick}
       className={`h-20 rounded-2xl border font-tech text-[10px] tracking-widest uppercase transition-all flex flex-col items-center justify-center text-center p-2 ${isActive
-          ? 'bg-white text-black border-white shadow-[0_0_15px_rgba(255,255,255,0.4)] scale-[1.02]'
-          : 'bg-[#111] border-white/5 text-white/20'
+        ? 'bg-white text-black border-white shadow-[0_0_15px_rgba(255,255,255,0.4)] scale-[1.02]'
+        : 'bg-[#111] border-white/5 text-white/20'
         } ${className}`}
     >
       {label}
@@ -89,8 +89,8 @@ const AdvancedPhase: React.FC<AdvancedPhaseProps> = ({ data, setData, onNext, on
     <button
       onClick={onClick}
       className={`h-20 rounded-2xl border font-tech text-[10px] tracking-widest uppercase transition-all flex flex-col items-center justify-center text-center p-2 ${isActive
-          ? 'bg-purple-500 text-white border-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.4)] scale-[1.02]'
-          : 'bg-[#111] border-white/5 text-white/20'
+        ? 'bg-purple-500 text-white border-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.4)] scale-[1.02]'
+        : 'bg-[#111] border-white/5 text-white/20'
         } ${className}`}
     >
       {label}
@@ -99,16 +99,16 @@ const AdvancedPhase: React.FC<AdvancedPhaseProps> = ({ data, setData, onNext, on
 
   const StatusToggle = ({ label, value, onChange, disableYes = false }: { label: string, value: number, onChange: (v: number) => void, disableYes?: boolean }) => (
     <div className="space-y-3">
-      <label className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase ml-2">{label}</label>
+      <label className="text-[11px] font-tech font-bold text-white/40 tracking-[0.2em] uppercase ml-2">{label}</label>
       <div className="grid grid-cols-2 gap-2 h-20 bg-[#111] rounded-3xl p-2 border border-white/5">
         <button
           onClick={() => !disableYes && onChange(1)}
           disabled={disableYes}
           className={`rounded-2xl text-[10px] font-tech tracking-widest transition-all ${value === 1
-              ? 'bg-white text-black shadow-[0_0_15px_white/20]'
-              : disableYes
-                ? 'text-white/5 cursor-not-allowed'
-                : 'text-white/20'
+            ? 'bg-white text-black shadow-[0_0_15px_white/20]'
+            : disableYes
+              ? 'text-white/5 cursor-not-allowed'
+              : 'text-white/20'
             }`}
         >
           YES
@@ -116,8 +116,8 @@ const AdvancedPhase: React.FC<AdvancedPhaseProps> = ({ data, setData, onNext, on
         <button
           onClick={() => onChange(0)}
           className={`rounded-2xl text-[10px] font-tech tracking-widest transition-all ${value === 0
-              ? 'bg-white text-black shadow-[0_0_15px_white/20]'
-              : 'text-white/20'
+            ? 'bg-white text-black shadow-[0_0_15px_white/20]'
+            : 'text-white/20'
             }`}
         >
           NO
@@ -135,7 +135,7 @@ const AdvancedPhase: React.FC<AdvancedPhaseProps> = ({ data, setData, onNext, on
         </div>
         <button
           onClick={onNext}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[10px] font-tech text-white/40 tracking-widest uppercase active:scale-95 transition-all"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-[10px] font-tech font-black text-white/40 tracking-widest uppercase active:scale-95 transition-all"
         >
           Skip <FastForward size={12} />
         </button>
@@ -145,7 +145,7 @@ const AdvancedPhase: React.FC<AdvancedPhaseProps> = ({ data, setData, onNext, on
 
         {/* Robot Field Role */}
         <div className="space-y-4">
-          <label className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase ml-2">Robot Field Role</label>
+          <label className="text-[11px] font-tech font-bold text-white/40 tracking-[0.2em] uppercase ml-2">Robot Field Role</label>
           <div className="grid grid-cols-2 gap-3">
             <OptionButton label="SCORER" isActive={data.adv_field_role === 0} onClick={() => setData({ ...data, adv_field_role: 0 })} />
             <OptionButton label="FEEDER" isActive={data.adv_field_role === 1} onClick={() => setData({ ...data, adv_field_role: 1 })} />
@@ -156,7 +156,7 @@ const AdvancedPhase: React.FC<AdvancedPhaseProps> = ({ data, setData, onNext, on
 
         {/* Hopper Capacity */}
         <div className="space-y-4">
-          <label className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase ml-2">Hopper Capacity</label>
+          <label className="text-[11px] font-tech font-bold text-white/40 tracking-[0.2em] uppercase ml-2">Hopper Capacity</label>
           <div className="grid grid-cols-2 gap-3">
             <OptionButton label="0-20" isActive={data.adv_hopper_cap === 0} onClick={() => setData({ ...data, adv_hopper_cap: 0 })} />
             <OptionButton label="21-40" isActive={data.adv_hopper_cap === 1} onClick={() => setData({ ...data, adv_hopper_cap: 1 })} />
@@ -169,7 +169,7 @@ const AdvancedPhase: React.FC<AdvancedPhaseProps> = ({ data, setData, onNext, on
 
         {/* Drivetrain Section */}
         <div className="space-y-4">
-          <label className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase ml-2">Drivetrain (adv_chasis)</label>
+          <label className="text-[11px] font-tech font-bold text-white/40 tracking-[0.2em] uppercase ml-2">Drivetrain (adv_chasis)</label>
           <div className="grid grid-cols-2 gap-3">
             <HardwareButton label="TANK" isActive={data.adv_chasis === 0} onClick={() => setData({ ...data, adv_chasis: 0 })} />
             <HardwareButton label="SWERVE" isActive={data.adv_chasis === 1} onClick={() => setData({ ...data, adv_chasis: 1 })} />
@@ -180,7 +180,7 @@ const AdvancedPhase: React.FC<AdvancedPhaseProps> = ({ data, setData, onNext, on
 
         {/* Intake Section */}
         <div className="space-y-4">
-          <label className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase ml-2">Intake Type (adv_intake)</label>
+          <label className="text-[11px] font-tech font-bold text-white/40 tracking-[0.2em] uppercase ml-2">Intake Type (adv_intake)</label>
           <div className="grid grid-cols-3 gap-3">
             <HardwareButton label="OVER BUMPER" isActive={data.adv_intake === 0} onClick={() => setData({ ...data, adv_intake: 0 })} />
             <HardwareButton label="UNDER BUMPER" isActive={data.adv_intake === 1} onClick={() => setData({ ...data, adv_intake: 1 })} />
@@ -191,7 +191,7 @@ const AdvancedPhase: React.FC<AdvancedPhaseProps> = ({ data, setData, onNext, on
         {/* Shooter Specs - RESTRICTED MULTI SELECT */}
         <div className="space-y-4">
           <div className="flex justify-between items-end ml-2">
-            <label className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase">Shooter Specs (adv_shooter)</label>
+            <label className="text-[11px] font-tech font-bold text-white/40 tracking-[0.2em] uppercase">Shooter Specs (adv_shooter)</label>
             <span className="text-[9px] font-mono text-white/20">VALID COMBOS ONLY</span>
           </div>
           <div className="grid grid-cols-2 gap-3">
@@ -205,7 +205,7 @@ const AdvancedPhase: React.FC<AdvancedPhaseProps> = ({ data, setData, onNext, on
 
         {/* Obstacle Handling */}
         <div className="space-y-4">
-          <label className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase ml-2">Obstacle Tech (adv_trench)</label>
+          <label className="text-[11px] font-tech font-bold text-white/40 tracking-[0.2em] uppercase ml-2">Obstacle Tech (adv_trench)</label>
           <div className="grid grid-cols-2 gap-3">
             <HardwareButton label="TRENCH" isActive={data.adv_trench === 0} onClick={() => setData({ ...data, adv_trench: 0 })} />
             <HardwareButton label="BUMP" isActive={data.adv_trench === 1} onClick={() => setData({ ...data, adv_trench: 1 })} />
@@ -247,13 +247,13 @@ const AdvancedPhase: React.FC<AdvancedPhaseProps> = ({ data, setData, onNext, on
       <div className="pt-6 flex gap-3 bg-[#0c0c0c] z-10">
         <button
           onClick={onBack}
-          className="w-[30%] py-5 rounded-full border border-white/10 text-white/40 font-tech text-[12px] tracking-[0.2em] active:scale-[0.98] transition-all uppercase"
+          className="w-[30%] py-5 rounded-full border border-white/10 text-white/40 font-tech font-black text-[12px] tracking-[0.2em] active:scale-[0.98] transition-all uppercase"
         >
           Back
         </button>
         <button
           onClick={onNext}
-          className="flex-1 py-5 rounded-full bg-white text-black font-tech text-[14px] tracking-[0.2em] flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(255,255,255,0.15)] active:scale-[0.98] transition-all uppercase"
+          className="flex-1 py-5 rounded-full bg-white text-black font-tech font-black text-[14px] tracking-[0.2em] flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(255,255,255,0.15)] active:scale-[0.98] transition-all uppercase"
         >
           Final Phase
           <ChevronRight size={18} />

@@ -3,11 +3,11 @@
  * Detects whether the PWA is running on Android or iOS
  */
 
-export type Platform = 'android' | 'ios' | 'unknown';
+export type Platform = 'android' | 'ios' | 'pc' | 'unknown';
 
 /**
  * Detects the current platform based on user agent and display mode
- * @returns 'android' | 'ios' | 'unknown'
+ * @returns 'android' | 'ios' | 'pc' | 'unknown'
  */
 export const detectPlatform = (): Platform => {
     const userAgent = navigator.userAgent.toLowerCase();
@@ -29,6 +29,11 @@ export const detectPlatform = (): Platform => {
 
     if (isIOSStandalone || (isStandalone && /safari/.test(userAgent))) {
         return 'ios';
+    }
+
+    // If it's none of the above, it's likely a desktop/PC
+    if (/windows|macintosh|linux/.test(userAgent)) {
+        return 'pc';
     }
 
     return 'unknown';

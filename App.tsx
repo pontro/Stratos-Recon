@@ -40,7 +40,8 @@ const App: React.FC = () => {
   const [currentTab, setCurrentTab] = useState<Tab>(Tab.SCOUT);
   const [currentPhase, setCurrentPhase] = useState<AppPhase>(AppPhase.SETUP);
   const [data, setData] = useState<ScoutingData>(getInitialData());
-  
+  const [showSettings, setShowSettings] = useState(false);
+
   // LAZY INITIALIZATION: Load from localStorage immediately during first render
   const [vault, setVault] = useState<ScoutingData[]>(() => {
     try {
@@ -60,9 +61,9 @@ const App: React.FC = () => {
   const saveToVault = useCallback(() => {
     // Generate a unique ID for this specific record
     const newData = { ...data, id: `record_${Date.now()}_${Math.random().toString(36).substr(2, 9)}` };
-    
+
     setVault((prevVault) => [newData, ...prevVault]);
-    
+
     // UI Resets
     setCurrentTab(Tab.VAULT);
     setData(getInitialData());
@@ -90,7 +91,14 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-col h-screen max-w-md mx-auto bg-[#0c0c0c] text-white shadow-2xl relative overflow-hidden selection:bg-white/20">
-      <Header currentPhase={currentPhase} isScoutTab={currentTab === Tab.SCOUT} />
+      <Header
+        currentPhase={currentPhase}
+        isScoutTab={currentTab === Tab.SCOUT}
+        onSettingsClick={() => {
+          setShowSettings(true);
+          setCurrentTab(Tab.VAULT);
+        }}
+      />
 
       <main className="flex-1 flex flex-col overflow-y-auto px-6 pt-2 pb-24 custom-scrollbar">
         {currentTab === Tab.SCOUT && (
@@ -103,21 +111,32 @@ const App: React.FC = () => {
           </div>
         )}
         {currentTab === Tab.VAULT && (
-          <VaultTab vault={vault} setVault={setVault} />
+          <VaultTab
+            vault={vault}
+            setVault={setVault}
+            showSettings={showSettings}
+            setShowSettings={setShowSettings}
+          />
         )}
       </main>
 
       <nav className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-[#0a0a0a]/95 backdrop-blur-md border-t border-white/5 px-12 py-5 z-50">
         <div className="flex justify-between items-center">
-          <NavItem 
-            label="SCOUT" 
-            isActive={currentTab === Tab.SCOUT} 
-            onClick={() => setCurrentTab(Tab.SCOUT)} 
+          <NavItem
+            label="SCOUT"
+            isActive={currentTab === Tab.SCOUT}
+            onClick={() => {
+              setCurrentTab(Tab.SCOUT);
+              setShowSettings(false);
+            }}
           />
-          <NavItem 
-            label="VAULT" 
-            isActive={currentTab === Tab.VAULT} 
-            onClick={() => setCurrentTab(Tab.VAULT)} 
+          <NavItem
+            label="VAULT"
+            isActive={currentTab === Tab.VAULT}
+            onClick={() => {
+              setCurrentTab(Tab.VAULT);
+              setShowSettings(false);
+            }}
           />
         </div>
       </nav>
@@ -128,7 +147,7 @@ const App: React.FC = () => {
 const NavItem: React.FC<{ label: string; isActive: boolean; onClick: () => void }> = ({ label, isActive, onClick }) => (
   <button onClick={onClick} className="flex flex-col items-center gap-1.5 w-20 group outline-none">
     <div className={`w-1 h-1 rounded-full transition-all duration-300 ${isActive ? 'bg-white shadow-[0_0_10px_white] scale-125' : 'bg-transparent'}`}></div>
-    <span className={`text-[11px] font-tech tracking-[0.2em] transition-colors ${isActive ? 'text-white' : 'text-white/20 group-active:text-white/50'}`}>{label}</span>
+    <span className={`text-[11px] font-tech font-black tracking-[0.2em] transition-colors ${isActive ? 'text-white' : 'text-white/20 group-active:text-white/50'}`}>{label}</span>
   </button>
 );
 

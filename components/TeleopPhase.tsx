@@ -28,13 +28,13 @@ const TeleopPhase: React.FC<TeleopPhaseProps> = ({ data, setData, onNext, onBack
         <div className="space-y-8">
           {/* Climb Level - Displayed as 0, L1, L2, L3 */}
           <div className="space-y-3">
-            <label className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase ml-2">Climb Level</label>
+            <label className="text-[11px] font-tech font-bold text-white/40 tracking-[0.2em] uppercase ml-2">Climb Level</label>
             <div className="grid grid-cols-4 gap-3">
               {[0, 1, 2, 3].map((level) => (
                 <button
                   key={level}
                   onClick={() => setData({ ...data, climbLevel: level })}
-                  className={`h-24 rounded-3xl flex items-center justify-center font-tech text-2xl border transition-all ${data.climbLevel === level ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)]' : 'bg-[#111] text-white/20 border-white/5'}`}
+                  className={`h-24 rounded-3xl flex items-center justify-center font-tech font-bold text-2xl border transition-all ${data.climbLevel === level ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)]' : 'bg-[#111] text-white/20 border-white/5'}`}
                 >
                   {level === 0 ? '0' : `L${level}`}
                 </button>
@@ -44,7 +44,7 @@ const TeleopPhase: React.FC<TeleopPhaseProps> = ({ data, setData, onNext, onBack
 
           {/* Teleop Fuel Points - MATCHES AUTO STYLE & RULES */}
           <div className="space-y-3">
-            <label className="text-[11px] font-tech text-white/40 tracking-[0.2em] uppercase ml-2">Teleop Fuel Points</label>
+            <label className="text-[11px] font-tech font-bold text-white/40 tracking-[0.2em] uppercase ml-2">Teleop Fuel Points</label>
             <div className="flex items-center gap-2 h-20">
               <button
                 onClick={() => setData({ ...data, teleopFuelPoints: Math.max(0, data.teleopFuelPoints - 1) })}
@@ -93,13 +93,13 @@ const TeleopPhase: React.FC<TeleopPhaseProps> = ({ data, setData, onNext, onBack
       <div className="mt-auto pt-6 flex gap-3">
         <button
           onClick={onBack}
-          className="w-[30%] py-5 rounded-full border border-white/10 text-white/40 font-tech text-[12px] tracking-[0.2em] active:scale-[0.98] transition-all uppercase"
+          className="w-[30%] py-5 rounded-full border border-white/10 text-white/40 font-tech font-black text-[12px] tracking-[0.2em] active:scale-[0.98] transition-all uppercase"
         >
           Back
         </button>
         <button
           onClick={onNext}
-          className="flex-1 py-5 rounded-full bg-white text-black font-tech text-[14px] tracking-[0.2em] flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(255,255,255,0.15)] active:scale-[0.98] transition-all uppercase"
+          className="flex-1 py-5 rounded-full bg-white text-black font-tech font-black text-[14px] tracking-[0.2em] flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(255,255,255,0.15)] active:scale-[0.98] transition-all uppercase"
         >
           Next Phase
           <ChevronRight size={18} />
