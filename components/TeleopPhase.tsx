@@ -19,22 +19,22 @@ const TeleopPhase: React.FC<TeleopPhaseProps> = ({ data, setData, onNext, onBack
 
   return (
     <div className="flex-1 flex flex-col animate-in fade-in slide-in-from-right-4 duration-500">
-      <div className="flex-1 space-y-6">
+      <div className="flex-1 space-y-6 lg:space-y-8">
         <div className="flex items-center gap-3">
-          <div className="w-1.5 h-6 bg-white"></div>
-          <h2 className="font-tech text-lg tracking-[0.3em] uppercase">TELEOPERATED</h2>
+          <div className="w-1.5 h-6 lg:h-8 bg-white"></div>
+          <h2 className="font-tech text-lg lg:text-xl tracking-[0.3em] uppercase">TELEOPERATED</h2>
         </div>
 
         <div className="space-y-8">
           {/* Climb Level - Displayed as 0, L1, L2, L3 */}
           <div className="space-y-3">
             <label className="text-[11px] font-tech font-bold text-white/40 tracking-[0.2em] uppercase ml-2">Climb Level</label>
-            <div className="grid grid-cols-4 gap-3">
+            <div className="grid grid-cols-4 gap-3 lg:gap-4">
               {[0, 1, 2, 3].map((level) => (
                 <button
                   key={level}
                   onClick={() => setData({ ...data, climbLevel: level })}
-                  className={`h-24 rounded-3xl flex items-center justify-center font-tech font-bold text-2xl border transition-all ${data.climbLevel === level ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)]' : 'bg-[#111] text-white/20 border-white/5'}`}
+                  className={`h-24 lg:h-28 rounded-3xl flex items-center justify-center font-tech font-bold text-2xl lg:text-3xl border transition-all ${data.climbLevel === level ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)]' : 'bg-[#111] text-white/20 border-white/5'}`}
                 >
                   {level === 0 ? '0' : `L${level}`}
                 </button>
@@ -45,10 +45,10 @@ const TeleopPhase: React.FC<TeleopPhaseProps> = ({ data, setData, onNext, onBack
           {/* Teleop Fuel Points - MATCHES AUTO STYLE & RULES */}
           <div className="space-y-3">
             <label className="text-[11px] font-tech font-bold text-white/40 tracking-[0.2em] uppercase ml-2">Teleop Fuel Points</label>
-            <div className="flex items-center gap-2 h-20">
+            <div className="flex items-center gap-2 lg:gap-3 h-20 lg:h-24">
               <button
                 onClick={() => setData({ ...data, teleopFuelPoints: Math.max(0, data.teleopFuelPoints - 1) })}
-                className="w-16 h-full rounded-2xl bg-[#161616] border border-white/5 flex items-center justify-center font-tech text-2xl active:bg-white active:text-black transition-all"
+                className="w-16 lg:w-20 h-full rounded-2xl bg-[#161616] border border-white/5 flex items-center justify-center font-tech text-2xl lg:text-3xl active:bg-white active:text-black transition-all"
               >
                 -
               </button>
@@ -61,19 +61,19 @@ const TeleopPhase: React.FC<TeleopPhaseProps> = ({ data, setData, onNext, onBack
                   value={data.teleopFuelPoints === 0 ? '' : data.teleopFuelPoints}
                   onChange={handleInputChange}
                   placeholder="0"
-                  className="bg-transparent text-3xl font-tech text-center w-full focus:outline-none placeholder:text-white/10 text-white"
+                  className="bg-transparent text-3xl lg:text-4xl font-tech text-center w-full focus:outline-none placeholder:text-white/10 text-white"
                 />
               </div>
 
               <button
                 onClick={() => setData({ ...data, teleopFuelPoints: data.teleopFuelPoints + 1 })}
-                className="w-16 h-full rounded-2xl bg-[#161616] border border-white/5 flex items-center justify-center font-tech text-2xl active:bg-white active:text-black transition-all"
+                className="w-16 lg:w-20 h-full rounded-2xl bg-[#161616] border border-white/5 flex items-center justify-center font-tech text-2xl lg:text-3xl active:bg-white active:text-black transition-all"
               >
                 +1
               </button>
               <button
                 onClick={() => setData({ ...data, teleopFuelPoints: data.teleopFuelPoints + 2 })}
-                className="w-16 h-full rounded-2xl bg-[#161616] border border-white/5 flex items-center justify-center font-tech text-2xl active:bg-white active:text-black transition-all"
+                className="w-16 lg:w-20 h-full rounded-2xl bg-[#161616] border border-white/5 flex items-center justify-center font-tech text-2xl lg:text-3xl active:bg-white active:text-black transition-all"
               >
                 +2
               </button>
@@ -85,24 +85,24 @@ const TeleopPhase: React.FC<TeleopPhaseProps> = ({ data, setData, onNext, onBack
             value={data.teleopComments}
             maxLength={50}
             onChange={(e) => setData({ ...data, teleopComments: e.target.value.slice(0, 50) })}
-            className="w-full h-24 bg-[#111]/50 border border-white/5 rounded-3xl p-6 text-[11px] font-mono focus:outline-none placeholder:text-white/5 resize-none"
+            className="w-full h-24 lg:h-28 bg-[#111]/50 border border-white/5 rounded-3xl p-6 text-xs md:text-sm lg:text-base font-mono focus:outline-none placeholder:text-white/5 resize-none"
           />
         </div>
       </div>
 
-      <div className="mt-auto pt-6 flex gap-3">
+      <div className="mt-auto pt-6 flex gap-3 lg:gap-4">
         <button
           onClick={onBack}
-          className="w-[30%] py-5 rounded-full border border-white/10 text-white/40 font-tech font-black text-[12px] tracking-[0.2em] active:scale-[0.98] transition-all uppercase"
+          className="w-[30%] py-5 lg:py-6 rounded-full border border-white/10 text-white/40 font-tech font-black text-[12px] lg:text-sm tracking-[0.2em] active:scale-[0.98] transition-all uppercase"
         >
           Back
         </button>
         <button
           onClick={onNext}
-          className="flex-1 py-5 rounded-full bg-white text-black font-tech font-black text-[14px] tracking-[0.2em] flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(255,255,255,0.15)] active:scale-[0.98] transition-all uppercase"
+          className="flex-1 py-5 lg:py-6 rounded-full bg-white text-black font-tech font-black text-[14px] lg:text-base tracking-[0.2em] flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(255,255,255,0.15)] active:scale-[0.98] transition-all uppercase"
         >
           Next Phase
-          <ChevronRight size={18} />
+          <ChevronRight size={18} className="lg:w-5 lg:h-5" />
         </button>
       </div>
     </div>

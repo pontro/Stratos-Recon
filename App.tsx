@@ -90,7 +90,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen max-w-md mx-auto bg-[#0c0c0c] text-white shadow-2xl relative overflow-hidden selection:bg-white/20">
+    <div className="flex flex-col h-screen max-w-md md:max-w-2xl lg:max-w-6xl mx-auto bg-[#0c0c0c] text-white shadow-2xl relative overflow-hidden selection:bg-white/20">
       <Header
         currentPhase={currentPhase}
         isScoutTab={currentTab === Tab.SCOUT}
@@ -100,7 +100,7 @@ const App: React.FC = () => {
         }}
       />
 
-      <main className="flex-1 flex flex-col overflow-y-auto px-6 pt-2 pb-24 custom-scrollbar">
+      <main className="flex-1 flex flex-col overflow-y-auto px-6 md:px-8 lg:px-12 pt-2 pb-24 custom-scrollbar">
         {currentTab === Tab.SCOUT && (
           <div className="flex-1 flex flex-col">
             {currentPhase === AppPhase.SETUP && <SetupPhase data={data} setData={setData} onNext={handleNextPhase} />}
@@ -120,8 +120,8 @@ const App: React.FC = () => {
         )}
       </main>
 
-      <nav className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-[#0a0a0a]/95 backdrop-blur-md border-t border-white/5 px-12 py-5 z-50">
-        <div className="flex justify-between items-center">
+      <nav className="fixed bottom-0 left-0 right-0 max-w-md md:max-w-2xl lg:max-w-6xl mx-auto bg-[#0a0a0a]/95 backdrop-blur-md border-t border-white/5 px-12 md:px-16 lg:px-24 py-5 lg:py-6 z-50">
+        <div className="flex justify-between md:justify-center md:gap-12 lg:gap-24 items-center">
           <NavItem
             label="SCOUT"
             isActive={currentTab === Tab.SCOUT}
@@ -145,9 +145,9 @@ const App: React.FC = () => {
 };
 
 const NavItem: React.FC<{ label: string; isActive: boolean; onClick: () => void }> = ({ label, isActive, onClick }) => (
-  <button onClick={onClick} className="flex flex-col items-center gap-1.5 w-20 group outline-none">
-    <div className={`w-1 h-1 rounded-full transition-all duration-300 ${isActive ? 'bg-white shadow-[0_0_10px_white] scale-125' : 'bg-transparent'}`}></div>
-    <span className={`text-[11px] font-tech font-black tracking-[0.2em] transition-colors ${isActive ? 'text-white' : 'text-white/20 group-active:text-white/50'}`}>{label}</span>
+  <button onClick={onClick} className="flex flex-col items-center gap-1.5 w-20 lg:w-32 group outline-none">
+    <div className={`w-1 h-1 lg:w-1.5 lg:h-1.5 rounded-full transition-all duration-300 ${isActive ? 'bg-white shadow-[0_0_10px_white] scale-125' : 'bg-transparent'}`}></div>
+    <span className={`text-[11px] lg:text-[13px] font-tech font-black tracking-[0.2em] transition-colors ${isActive ? 'text-white' : 'text-white/20 group-active:text-white/50'}`}>{label}</span>
   </button>
 );
 

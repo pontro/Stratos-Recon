@@ -14,13 +14,29 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-.font-tech { font-family: 'Orbitron', sans-serif; font-weight: 700; }
-.font-mono { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+.font-tech {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+}
 
 /* Custom Scrollbar */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #111; }
-::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+}
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -31,4 +47,26 @@ input::-webkit-inner-spin-button {
 /* PWA safe area padding */
 main {
   padding-bottom: env(safe-area-inset-bottom, 24px);
+}
+
+/* Desktop Responsive Enhancements */
+@media (min-width: 1024px) {
+
+  /* Wider scrollbar for desktop */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0a0a0a;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 }

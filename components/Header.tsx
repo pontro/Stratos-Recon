@@ -26,15 +26,15 @@ const Header: React.FC<HeaderProps> = ({ currentPhase, isScoutTab, onSettingsCli
   }, []);
 
   return (
-    <header className="pt-6 px-6 pb-2">
+    <header className="pt-6 px-6 md:px-8 lg:px-12 pb-2">
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-3">
-          <h1 className="font-tech text-2xl font-black tracking-tighter leading-none">
+          <h1 className="font-tech text-2xl lg:text-3xl font-black tracking-tighter leading-none">
             STRATOS<span className="text-white/30">SCOUT</span>
           </h1>
           {isOffline && (
-            <div className="flex items-center gap-1 px-2 py-0.5 rounded-md bg-orange-500/10 border border-orange-500/20 text-[8px] font-tech text-orange-500 uppercase tracking-widest animate-pulse">
-              <WifiOff size={10} /> Offline
+            <div className="flex items-center gap-1 px-2 py-0.5 rounded-md bg-orange-500/10 border border-orange-500/20 text-[8px] lg:text-[9px] font-tech text-orange-500 uppercase tracking-widest animate-pulse">
+              <WifiOff size={10} className="lg:w-3 lg:h-3" /> Offline
             </div>
           )}
           {(detectPlatform() === 'pc' || detectPlatform() === 'android') && (
@@ -42,11 +42,11 @@ const Header: React.FC<HeaderProps> = ({ currentPhase, isScoutTab, onSettingsCli
               onClick={onSettingsClick}
               className="p-2 text-white/20 hover:text-white transition-colors active:scale-90"
             >
-              <Settings size={18} />
+              <Settings size={18} className="lg:w-5 lg:h-5" />
             </button>
           )}
         </div>
-        <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)] animate-pulse"></div>
+        <div className="w-2 h-2 lg:w-2.5 lg:h-2.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)] animate-pulse"></div>
       </div>
 
       {isScoutTab && currentPhase !== AppPhase.FINISH && (

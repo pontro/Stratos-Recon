@@ -40,22 +40,22 @@ const ReviewPhase: React.FC<ReviewPhaseProps> = ({ data, setData, onNext, onBack
   return (
     <div className="flex-1 flex flex-col animate-in fade-in slide-in-from-right-4 duration-500 overflow-hidden">
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-1.5 h-6 bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>
-        <h2 className="font-tech text-lg tracking-[0.3em] uppercase">MISSION REVIEW</h2>
+        <div className="w-1.5 h-6 lg:h-8 bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>
+        <h2 className="font-tech text-lg lg:text-xl tracking-[0.3em] uppercase">MISSION REVIEW</h2>
       </div>
 
       <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar pb-6 space-y-2">
 
         {/* MATCH METRICS */}
-        <div className="bg-white/5 rounded-3xl p-6 border border-white/5 mb-4">
+        <div className="bg-white/5 rounded-3xl p-6 lg:p-8 border border-white/5 mb-4">
           <div className="flex justify-between items-end mb-4">
             <div>
               <div className="text-[11px] font-tech font-bold text-white/30 uppercase tracking-[0.2em] mb-1">TEAM UNIT</div>
-              <div className="text-3xl font-tech tracking-tighter">{data.teamNumber}</div>
+              <div className="text-3xl lg:text-4xl font-tech tracking-tighter">{data.teamNumber}</div>
             </div>
             <div className="text-right">
               <div className="text-[11px] font-tech font-bold text-white/30 uppercase tracking-[0.2em] mb-1">SCOUTER / MATCH</div>
-              <div className="text-xl font-tech text-white/60">{data.scouter} <span className="text-xs text-white/30">#{data.matchNumber}</span></div>
+              <div className="text-xl lg:text-2xl font-tech text-white/60">{data.scouter} <span className="text-xs lg:text-sm text-white/30">#{data.matchNumber}</span></div>
             </div>
           </div>
           <SummaryItem label="Alliance" value={data.alliance} colorClass={data.alliance === Alliance.RED ? 'text-red-500' : 'text-blue-500'} />
@@ -84,19 +84,19 @@ const ReviewPhase: React.FC<ReviewPhaseProps> = ({ data, setData, onNext, onBack
         <SummaryItem label="Fixed" value={data.adv_fixed === 1 ? 'YES' : data.adv_fixed === 0 ? 'NO' : 'N/A'} colorClass={data.adv_fixed === 1 ? 'text-green-500' : ''} />
       </div>
 
-      <div className="pt-6 flex gap-3 bg-[#0c0c0c] z-10">
+      <div className="pt-6 flex gap-3 lg:gap-4 bg-[#0c0c0c] z-10">
         <button
           onClick={onBack}
-          className="w-[30%] py-5 rounded-full border border-white/10 text-white/40 font-tech font-black text-[12px] tracking-[0.2em] active:scale-[0.98] transition-all uppercase"
+          className="w-[30%] py-5 lg:py-6 rounded-full border border-white/10 text-white/40 font-tech font-black text-[12px] lg:text-sm tracking-[0.2em] active:scale-[0.98] transition-all uppercase"
         >
           Back
         </button>
         <button
           onClick={onNext}
-          className="flex-1 py-5 rounded-full bg-green-500 text-black font-tech font-black text-[14px] tracking-[0.2em] flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(34,197,94,0.3)] active:scale-[0.98] transition-all uppercase"
+          className="flex-1 py-5 lg:py-6 rounded-full bg-green-500 text-black font-tech font-black text-[14px] lg:text-base tracking-[0.2em] flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(34,197,94,0.3)] active:scale-[0.98] transition-all uppercase"
         >
           Finalize & Save
-          <CheckCircle2 size={18} />
+          <CheckCircle2 size={18} className="lg:w-5 lg:h-5" />
         </button>
       </div>
     </div>

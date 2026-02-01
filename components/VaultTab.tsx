@@ -237,10 +237,11 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault, showSettings, setS
       <button onClick={() => setSelected(null)} className="mb-6 flex items-center gap-2 text-[10px] font-tech text-white/40 uppercase">
         <ChevronLeft size={14} /> BACK TO ARCHIVE
       </button>
-      <div className="bg-white p-5 rounded-3xl mx-auto mb-6 w-fit shadow-2xl">
+      <div className="bg-white p-5 lg:p-6 rounded-3xl mx-auto mb-6 w-fit shadow-2xl">
         <QRCodeSVG
           value={JSON.stringify(compressScoutingData(selected))}
           size={240}
+          className="lg:w-80 lg:h-80"
           fgColor="#000"
           bgColor="#fff"
           level="M"
@@ -291,10 +292,11 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault, showSettings, setS
       <button onClick={() => setShowMaster(false)} className="mb-6 flex items-center gap-2 text-[10px] font-tech text-white/40 uppercase">
         <ChevronLeft size={14} /> BACK TO ARCHIVE
       </button>
-      <div className="bg-white p-5 rounded-3xl mx-auto mb-6 w-fit shadow-2xl">
+      <div className="bg-white p-5 lg:p-6 rounded-3xl mx-auto mb-6 w-fit shadow-2xl">
         <QRCodeSVG
           value={JSON.stringify(getMasterData())}
           size={260}
+          className="lg:w-96 lg:h-96"
           fgColor="#000"
           bgColor="#fff"
           level="M"
@@ -347,25 +349,25 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault, showSettings, setS
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 mb-4">
+      <div className="flex gap-3 mb-4">
         <button
           onClick={() => setShowScanner(true)}
-          className="bg-white/5 border border-white/5 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 group active:bg-white/10 transition-all"
+          className="flex-1 bg-white/5 border border-white/5 rounded-2xl p-4 lg:p-5 flex flex-col items-center justify-center gap-2 group active:bg-white/10 transition-all"
         >
-          <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
-            <Camera size={16} />
+          <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
+            <Camera size={16} className="lg:w-5 lg:h-5" />
           </div>
-          <div className="font-tech font-bold text-[10px] tracking-widest uppercase">Scan Unit</div>
+          <div className="font-tech font-bold text-[10px] lg:text-[11px] tracking-widest uppercase">Scan Unit</div>
         </button>
         {vault.length > 0 && (
           <button
             onClick={() => setShowMaster(true)}
-            className="bg-white/5 border border-white/5 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 group active:bg-white/10 transition-all"
+            className="flex-1 bg-white/5 border border-white/5 rounded-2xl p-4 lg:p-5 flex flex-col items-center justify-center gap-2 group active:bg-white/10 transition-all"
           >
-            <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400">
-              <Layers size={16} />
+            <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400">
+              <Layers size={16} className="lg:w-5 lg:h-5" />
             </div>
-            <div className="font-tech font-bold text-[10px] tracking-widest uppercase">Master QR</div>
+            <div className="font-tech font-bold text-[10px] lg:text-[11px] tracking-widest uppercase">Master QR</div>
           </button>
         )}
       </div>
@@ -475,7 +477,7 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault, showSettings, setS
           </button>
         </div>
       ) : (
-        <div className="space-y-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-3">
           {vault.map((item) => (
             <div key={item.id} className="relative overflow-hidden group">
               <div className="bg-[#111] border border-white/5 rounded-2xl p-4 flex items-center justify-between group active:bg-white/[0.02] transition-all">
