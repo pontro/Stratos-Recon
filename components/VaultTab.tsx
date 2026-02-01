@@ -315,7 +315,7 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault, showSettings, setS
     <div className="space-y-4 animate-in fade-in duration-500">
       <div className="flex justify-between items-center mb-2">
         <div className="flex items-center gap-2">
-          <History size={16} className="text-white/20" />
+          <History size={16} className="text-white/50" />
           <h2 className="font-tech font-bold text-sm tracking-widest uppercase">Archive</h2>
         </div>
         <div className="flex items-center gap-4">
@@ -345,7 +345,7 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault, showSettings, setS
               </button>
             )
           )}
-          <span className="text-[10px] font-mono text-white/20 uppercase">{vault.length} UNITS LOGGED</span>
+          <span className="text-[10px] font-mono text-white/50 uppercase">{vault.length} UNITS LOGGED</span>
         </div>
       </div>
 
@@ -484,7 +484,7 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault, showSettings, setS
                 <div className="flex-1 cursor-pointer" onClick={() => setSelected(item)}>
                   <div className="flex items-center gap-3 mb-1">
                     <span className={`w-1.5 h-1.5 rounded-full ${item.alliance === Alliance.RED ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]' : 'bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]'}`}></span>
-                    <span className="text-[9px] font-tech text-white/30 uppercase tracking-[0.1em]">{item.matchType} #{item.matchNumber}</span>
+                    <span className="text-[9px] font-tech text-white/50 uppercase tracking-[0.1em]">{item.matchType} #{item.matchNumber}</span>
                   </div>
                   <div className="font-tech text-lg tracking-tighter uppercase">TEAM {item.teamNumber}</div>
                 </div>

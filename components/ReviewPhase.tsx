@@ -13,7 +13,7 @@ const ReviewPhase: React.FC<ReviewPhaseProps> = ({ data, setData, onNext, onBack
 
   const SummaryItem = ({ label, value, colorClass = "text-white" }: { label: string, value: string | number | boolean, colorClass?: string }) => (
     <div className="flex justify-between items-center py-3 border-b border-white/5">
-      <span className="text-[11px] font-tech font-bold text-white/30 uppercase tracking-[0.2em]">{label}</span>
+      <span className="text-[11px] font-tech font-bold text-white/50 uppercase tracking-[0.2em]">{label}</span>
       <span className={`text-[11px] font-mono font-bold uppercase ${colorClass}`}>
         {typeof value === 'boolean' ? (value ? 'YES' : 'NO') : value}
       </span>

@@ -80,7 +80,7 @@ const SetupPhase: React.FC<SetupPhaseProps> = ({ data, setData, onNext }) => {
                 onClick={() => updateVal('matchType', type)}
                 className={`py-4 lg:py-5 rounded-xl text-[10px] lg:text-[11px] font-tech font-bold tracking-widest border transition-all ${data.matchType === type
                   ? 'bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.4)]'
-                  : 'bg-[#161616] text-white/20 border-white/5'
+                  : 'bg-[#161616] text-white/50 border-white/5'
                   }`}
               >
                 {type === MatchType.QUALIFICATION ? 'QUAL' : type}
@@ -103,11 +103,11 @@ const SetupPhase: React.FC<SetupPhaseProps> = ({ data, setData, onNext }) => {
                 onClick={() => updateVal('startingZone', zone.id)}
                 className={`py-4 lg:py-6 rounded-2xl flex flex-col items-center justify-center transition-all border ${data.startingZone === zone.id
                   ? 'bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.3)]'
-                  : 'bg-[#161616] text-white/20 border-white/5 active:border-white/10'
+                  : 'bg-[#161616] text-white/50 border-white/5 active:border-white/10'
                   }`}
               >
                 <span className="font-tech text-2xl lg:text-3xl font-bold leading-none">{zone.num}</span>
-                <span className={`text-[10px] lg:text-[11px] font-tech tracking-wider mt-1 font-bold ${data.startingZone === zone.id ? 'opacity-100' : 'opacity-40'}`}>
+                <span className={`text-[10px] lg:text-[11px] font-tech tracking-wider mt-1 font-bold ${data.startingZone === zone.id ? 'opacity-100' : 'opacity-50'}`}>
                   {zone.label}
                 </span>
               </button>
@@ -121,7 +121,7 @@ const SetupPhase: React.FC<SetupPhaseProps> = ({ data, setData, onNext }) => {
             onClick={() => updateVal('alliance', Alliance.RED)}
             className={`py-5 lg:py-6 rounded-2xl font-tech text-sm lg:text-base tracking-widest border transition-all ${data.alliance === Alliance.RED
               ? 'bg-red-500/10 border-red-500 text-red-500 shadow-[0_0_20px_rgba(239,68,68,0.2)]'
-              : 'bg-[#161616] border-white/5 text-white/10'
+              : 'bg-[#161616] border-white/5 text-white/50'
               }`}
           >
             RED

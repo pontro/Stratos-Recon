@@ -34,7 +34,7 @@ const TeleopPhase: React.FC<TeleopPhaseProps> = ({ data, setData, onNext, onBack
                 <button
                   key={level}
                   onClick={() => setData({ ...data, climbLevel: level })}
-                  className={`h-24 lg:h-28 rounded-3xl flex items-center justify-center font-tech font-bold text-2xl lg:text-3xl border transition-all ${data.climbLevel === level ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)]' : 'bg-[#111] text-white/20 border-white/5'}`}
+                  className={`h-24 lg:h-28 rounded-3xl flex items-center justify-center font-tech font-bold text-2xl lg:text-3xl border transition-all ${data.climbLevel === level ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)]' : 'bg-[#111] text-white/50 border-white/5'}`}
                 >
                   {level === 0 ? '0' : `L${level}`}
                 </button>

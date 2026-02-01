@@ -147,7 +147,7 @@ const App: React.FC = () => {
 const NavItem: React.FC<{ label: string; isActive: boolean; onClick: () => void }> = ({ label, isActive, onClick }) => (
   <button onClick={onClick} className="flex flex-col items-center gap-1.5 w-20 lg:w-32 group outline-none">
     <div className={`w-1 h-1 lg:w-1.5 lg:h-1.5 rounded-full transition-all duration-300 ${isActive ? 'bg-white shadow-[0_0_10px_white] scale-125' : 'bg-transparent'}`}></div>
-    <span className={`text-[11px] lg:text-[13px] font-tech font-black tracking-[0.2em] transition-colors ${isActive ? 'text-white' : 'text-white/20 group-active:text-white/50'}`}>{label}</span>
+    <span className={`text-[11px] lg:text-[13px] font-tech font-black tracking-[0.2em] transition-colors ${isActive ? 'text-white' : 'text-white/50 group-active:text-white/80'}`}>{label}</span>
   </button>
 );
 

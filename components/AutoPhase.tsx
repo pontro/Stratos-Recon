@@ -44,13 +44,13 @@ const AutoPhase: React.FC<AutoPhaseProps> = ({ data, setData, onNext, onBack }) 
             <div className="flex bg-[#111] rounded-3xl p-2 border border-white/5 h-20 lg:h-24">
               <button
                 onClick={() => setIsActive(true)}
-                className={`flex-1 rounded-2xl text-sm lg:text-base font-tech font-bold tracking-widest transition-all ${data.isActiveInAuto ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)] scale-[1.02]' : 'text-white/20'}`}
+                className={`flex-1 rounded-2xl text-sm lg:text-base font-tech font-bold tracking-widest transition-all ${data.isActiveInAuto ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)] scale-[1.02]' : 'text-white/50'}`}
               >
                 YES
               </button>
               <button
                 onClick={() => setIsActive(false)}
-                className={`flex-1 rounded-2xl text-sm lg:text-base font-tech font-bold tracking-widest transition-all ${!data.isActiveInAuto ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)] scale-[1.02]' : 'text-white/20'}`}
+                className={`flex-1 rounded-2xl text-sm lg:text-base font-tech font-bold tracking-widest transition-all ${!data.isActiveInAuto ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)] scale-[1.02]' : 'text-white/50'}`}
               >
                 NO
               </button>
@@ -65,13 +65,13 @@ const AutoPhase: React.FC<AutoPhaseProps> = ({ data, setData, onNext, onBack }) 
                 <div className="flex bg-[#111] rounded-3xl p-2 border border-white/5 h-20 lg:h-24">
                   <button
                     onClick={() => setData({ ...data, autoHang: true })}
-                    className={`flex-1 rounded-2xl text-sm lg:text-base font-tech tracking-widest transition-all ${data.autoHang ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)] scale-[1.02]' : 'text-white/20'}`}
+                    className={`flex-1 rounded-2xl text-sm lg:text-base font-tech tracking-widest transition-all ${data.autoHang ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)] scale-[1.02]' : 'text-white/50'}`}
                   >
                     YES
                   </button>
                   <button
                     onClick={() => setData({ ...data, autoHang: false })}
-                    className={`flex-1 rounded-2xl text-sm lg:text-base font-tech tracking-widest transition-all ${!data.autoHang ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)] scale-[1.02]' : 'text-white/20'}`}
+                    className={`flex-1 rounded-2xl text-sm lg:text-base font-tech tracking-widest transition-all ${!data.autoHang ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)] scale-[1.02]' : 'text-white/50'}`}
                   >
                     NO
                   </button>
