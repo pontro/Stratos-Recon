@@ -37,14 +37,12 @@ const Header: React.FC<HeaderProps> = ({ currentPhase, isScoutTab, onSettingsCli
               <WifiOff size={10} className="lg:w-3 lg:h-3" /> Offline
             </div>
           )}
-          {(detectPlatform() === 'pc' || detectPlatform() === 'android') && (
-            <button
-              onClick={onSettingsClick}
-              className="p-2 text-white/20 hover:text-white transition-colors active:scale-90"
-            >
-              <Settings size={18} className="lg:w-5 lg:h-5" />
-            </button>
-          )}
+          <button
+            onClick={onSettingsClick}
+            className="p-2 text-white/20 hover:text-white transition-colors active:scale-90"
+          >
+            <Settings size={18} className="lg:w-5 lg:h-5" />
+          </button>
         </div>
         <div className="w-2 h-2 lg:w-2.5 lg:h-2.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)] animate-pulse"></div>
       </div>
