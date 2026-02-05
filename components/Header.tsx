@@ -30,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({ currentPhase, isScoutTab, onSettingsCli
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-3">
           <h1 className="font-tech text-2xl lg:text-3xl font-black tracking-tighter leading-none">
-            STRATOS<span className="text-white/30">SCOUT</span>
+            STRATOS
           </h1>
           {isOffline && (
             <div className="flex items-center gap-1 px-2 py-0.5 rounded-md bg-orange-500/10 border border-orange-500/20 text-[8px] lg:text-[9px] font-tech text-orange-500 uppercase tracking-widest animate-pulse">

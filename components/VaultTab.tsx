@@ -53,8 +53,8 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault, showSettings, setS
     }
   };
 
-  // Android Export Handler
-  const handleAndroidExport = async () => {
+  // Push Export Handler
+  const handlePushExport = async () => {
     if (vault.length === 0) {
       setExportStatus('No data to export');
       setTimeout(() => setExportStatus(''), 2000);
@@ -71,8 +71,8 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault, showSettings, setS
     setTimeout(() => setExportStatus(''), 3000);
   };
 
-  // iOS Export Handler - Downloads CSV file
-  const handleIOSExport = () => {
+  // Download Export Handler - Downloads CSV file
+  const handleDownloadExport = () => {
     if (vault.length === 0) {
       setExportStatus('No data to export');
       setTimeout(() => setExportStatus(''), 2000);
@@ -111,7 +111,7 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault, showSettings, setS
       setExportStatus('CSV downloaded successfully');
       setTimeout(() => setExportStatus(''), 3000);
     } catch (error) {
-      console.error('[iOS Export] Error:', error);
+      console.error('[Download Export] Error:', error);
       setExportStatus('Export failed');
       setTimeout(() => setExportStatus(''), 3000);
     }
@@ -204,19 +204,15 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault, showSettings, setS
         <div className="space-y-4">
           <div>
             <label className="text-[10px] font-tech text-white/40 uppercase tracking-widest block mb-2">
-              PC Endpoint URL
+              Server URL
             </label>
             <input
               type="text"
               value={endpointInput}
               onChange={(e) => setEndpointInput(e.target.value)}
-              placeholder="http://192.168.1.100:8080/upload"
+              placeholder="http://192.168.1.100:8080"
               className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-[11px] font-mono text-white/80 placeholder:text-white/20 focus:outline-none focus:border-green-500/50 transition-colors"
             />
-            <p className="text-[9px] font-mono text-white/30 mt-2 leading-relaxed">
-              Enter the IP address and port of your PC running the CSV receiver server.
-              Example: http://192.168.1.100:8080/upload
-            </p>
           </div>
 
           <button
@@ -224,7 +220,7 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault, showSettings, setS
             disabled={!endpointInput.trim()}
             className="w-full bg-green-500 text-white font-tech text-[10px] uppercase tracking-widest py-3 rounded-xl disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 transition-all shadow-[0_0_15px_rgba(34,197,94,0.3)]"
           >
-            Save Endpoint
+            Save Server URL
           </button>
         </div>
       </div>
@@ -372,53 +368,12 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault, showSettings, setS
         )}
       </div>
 
-      {/* Export Button - Platform Conditional */}
+      {/* Export Section - All platforms now see both options */}
       {vault.length > 0 && (
         <div className="mb-4">
-          {platform === 'pc' ? (
-            <div className="space-y-3">
-              {confirmingExport ? (
-                <div className="w-full bg-green-500/10 border border-green-500/20 rounded-2xl p-4 flex items-center justify-between">
-                  <span className="text-[10px] font-tech font-bold text-green-400/80 uppercase tracking-widest">Push {vault.length} record{vault.length !== 1 ? 's' : ''} to PC?</span>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => setConfirmingExport(false)}
-                      className="px-3 py-2 text-[8px] font-tech font-bold text-white/40 border border-white/10 rounded-lg uppercase tracking-widest active:bg-white/5"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      onClick={handleAndroidExport}
-                      className="px-3 py-2 text-[8px] font-tech font-bold bg-green-500 text-white rounded-lg uppercase tracking-widest shadow-[0_0_10px_rgba(34,197,94,0.3)] active:scale-95 transition-all"
-                    >
-                      Confirm
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <button
-                  onClick={() => setConfirmingExport(true)}
-                  className="w-full bg-green-500/10 border border-green-500/20 rounded-2xl p-4 flex items-center justify-center gap-3 group active:bg-green-500/20 transition-all font-bold"
-                >
-                  <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">
-                    <Upload size={16} />
-                  </div>
-                  <div className="font-tech font-bold text-[11px] tracking-widest uppercase text-green-400">Push CSV to PC</div>
-                </button>
-              )}
-              <button
-                onClick={handleIOSExport}
-                className="w-full bg-blue-500/10 border border-blue-500/20 rounded-2xl p-4 flex items-center justify-center gap-3 group active:bg-blue-500/20 transition-all font-bold"
-              >
-                <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
-                  <Download size={16} />
-                </div>
-                <div className="font-tech font-bold text-[11px] tracking-widest uppercase text-blue-400">Download CSV</div>
-              </button>
-            </div>
-          ) : platform === 'android' ? (
-            confirmingExport ? (
-              <div className="w-full bg-green-500/10 border border-green-500/20 rounded-2xl p-4 flex items-center justify-between">
+          <div className="space-y-3">
+            {confirmingExport ? (
+              <div className="w-full bg-green-500/10 border border-green-500/20 rounded-2xl p-4 flex items-center justify-between animate-in slide-in-from-top-2 duration-200">
                 <span className="text-[10px] font-tech font-bold text-green-400/80 uppercase tracking-widest">Push {vault.length} record{vault.length !== 1 ? 's' : ''} to PC?</span>
                 <div className="flex items-center gap-2">
                   <button
@@ -428,7 +383,7 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault, showSettings, setS
                     Cancel
                   </button>
                   <button
-                    onClick={handleAndroidExport}
+                    onClick={handlePushExport}
                     className="px-3 py-2 text-[8px] font-tech font-bold bg-green-500 text-white rounded-lg uppercase tracking-widest shadow-[0_0_10px_rgba(34,197,94,0.3)] active:scale-95 transition-all"
                   >
                     Confirm
@@ -438,17 +393,17 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault, showSettings, setS
             ) : (
               <button
                 onClick={() => setConfirmingExport(true)}
-                className="w-full bg-green-500/10 border border-green-500/20 rounded-2xl p-4 flex items-center justify-center gap-3 group active:bg-green-500/20 transition-all"
+                className="w-full bg-green-500/10 border border-green-500/20 rounded-2xl p-4 flex items-center justify-center gap-3 group active:bg-green-500/20 transition-all font-bold"
               >
                 <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">
                   <Upload size={16} />
                 </div>
                 <div className="font-tech font-bold text-[11px] tracking-widest uppercase text-green-400">Push CSV to PC</div>
               </button>
-            )
-          ) : platform === 'ios' ? (
+            )}
+
             <button
-              onClick={handleIOSExport}
+              onClick={handleDownloadExport}
               className="w-full bg-blue-500/10 border border-blue-500/20 rounded-2xl p-4 flex items-center justify-center gap-3 group active:bg-blue-500/20 transition-all font-bold"
             >
               <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
@@ -456,7 +411,8 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault, showSettings, setS
               </div>
               <div className="font-tech font-bold text-[11px] tracking-widest uppercase text-blue-400">Download CSV</div>
             </button>
-          ) : null}
+          </div>
+
           {exportStatus && (
             <div className="mt-2 text-center text-[10px] font-mono text-white/60 animate-in fade-in duration-200">
               {exportStatus}

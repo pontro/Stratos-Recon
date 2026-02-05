@@ -6,8 +6,9 @@ import { compressScoutingData } from './qrHelper';
  * Generates CSV from vault data and sends to PC endpoint
  */
 
-// Default endpoint - can be configured via environment or UI
-const DEFAULT_ENDPOINT = 'http://10.228.6.228:8080/upload';
+// Default server URL - can be configured via UI
+const DEFAULT_SERVER_URL = 'http://10.228.6.228:8080';
+const EXPORT_ENDPOINT = '/api/scout/upload';
 
 /**
  * Generates CSV string from vault data
@@ -66,17 +67,21 @@ export const generateCSV = (vault: ScoutingData[]): string => {
 /**
  * Sends CSV data to PC endpoint via HTTP POST
  * @param csvContent CSV string to send
- * @param endpoint Optional custom endpoint (defaults to DEFAULT_ENDPOINT)
+ * @param serverUrl Optional custom server URL (defaults to DEFAULT_SERVER_URL)
  * @returns Promise resolving to success status and message
  */
 export const pushCSVToPC = async (
     csvContent: string,
-    endpoint: string = DEFAULT_ENDPOINT
+    serverUrl: string = getEndpoint()
 ): Promise<{ success: boolean; message: string }> => {
-    console.log('[CSV Export] Attempting POST to:', endpoint);
+    // Ensure serverUrl doesn't end with a slash to avoid double slashes when combining
+    const base = serverUrl.endsWith('/') ? serverUrl.slice(0, -1) : serverUrl;
+    const fullUrl = `${base}${EXPORT_ENDPOINT}`;
+
+    console.log('[CSV Export] Attempting POST to:', fullUrl);
 
     try {
-        const response = await fetch(endpoint, {
+        const response = await fetch(fullUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/csv',
@@ -107,12 +112,12 @@ export const pushCSVToPC = async (
 };
 
 /**
- * Gets the current configured endpoint
+ * Gets the current configured server URL
  * Reads from localStorage or returns default
  */
 export const getEndpoint = (): string => {
     const stored = localStorage.getItem('csv_endpoint');
-    return stored || DEFAULT_ENDPOINT;
+    return stored || DEFAULT_SERVER_URL;
 };
 
 /**

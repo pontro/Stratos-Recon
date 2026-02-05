@@ -14,13 +14,13 @@ const FinishPhase: React.FC<FinishPhaseProps> = ({ data, onRestart }) => (
     <div className="relative">
       <div className="absolute inset-0 bg-white/5 blur-3xl rounded-full"></div>
       <div className="bg-white p-5 rounded-3xl relative shadow-2xl">
-        <QRCodeSVG 
-          value={JSON.stringify(compressScoutingData(data))} 
-          size={200} 
-          level="H" 
-          includeMargin={false} 
-          fgColor="#000" 
-          bgColor="#fff" 
+        <QRCodeSVG
+          value={JSON.stringify(compressScoutingData(data))}
+          size={200}
+          level="H"
+          includeMargin={false}
+          fgColor="#000"
+          bgColor="#fff"
         />
       </div>
     </div>
