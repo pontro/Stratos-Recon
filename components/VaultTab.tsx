@@ -195,33 +195,51 @@ const VaultTab: React.FC<VaultTabProps> = ({ vault, setVault, showSettings, setS
         <ChevronLeft size={14} /> BACK TO ARCHIVE
       </button>
 
-      <div className="bg-[#111] p-6 rounded-2xl border border-white/5">
-        <div className="flex items-center gap-2 mb-6">
-          <Settings size={16} className="text-white/40" />
-          <h3 className="font-tech font-bold text-sm tracking-widest uppercase">Export Settings</h3>
-        </div>
-
-        <div className="space-y-4">
-          <div>
-            <label className="text-[10px] font-tech text-white/40 uppercase tracking-widest block mb-2">
-              Server URL
-            </label>
-            <input
-              type="text"
-              value={endpointInput}
-              onChange={(e) => setEndpointInput(e.target.value)}
-              placeholder="http://192.168.1.100:8080"
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-[11px] font-mono text-white/80 placeholder:text-white/20 focus:outline-none focus:border-green-500/50 transition-colors"
-            />
+      <div className="bg-[#111] p-6 rounded-2xl border border-white/5 flex flex-col gap-6">
+        <div>
+          <div className="flex items-center gap-2 mb-6">
+            <Settings size={16} className="text-white/40" />
+            <h3 className="font-tech font-bold text-sm tracking-widest uppercase">Export Settings</h3>
           </div>
 
-          <button
-            onClick={handleSaveEndpoint}
-            disabled={!endpointInput.trim()}
-            className="w-full bg-green-500 text-white font-tech text-[10px] uppercase tracking-widest py-3 rounded-xl disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 transition-all shadow-[0_0_15px_rgba(34,197,94,0.3)]"
-          >
-            Save Server URL
-          </button>
+          <div className="space-y-4">
+            <div>
+              <label className="text-[10px] font-tech text-white/40 uppercase tracking-widest block mb-2">
+                Server URL
+              </label>
+              <input
+                type="text"
+                value={endpointInput}
+                onChange={(e) => setEndpointInput(e.target.value)}
+                placeholder="http://192.168.1.100:8080"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-[11px] font-mono text-white/80 placeholder:text-white/20 focus:outline-none focus:border-green-500/50 transition-colors"
+              />
+            </div>
+
+            <button
+              onClick={handleSaveEndpoint}
+              disabled={!endpointInput.trim()}
+              className="w-full bg-green-500 text-white font-tech text-[10px] uppercase tracking-widest py-3 rounded-xl disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 transition-all shadow-[0_0_15px_rgba(34,197,94,0.3)]"
+            >
+              Save Server URL
+            </button>
+          </div>
+        </div>
+
+        <div className="pt-4 border-t border-white/5">
+          <p className="text-[11px] font-mono text-white/60 mb-4">
+            Stratos Recon is the client side of Stratos Scout
+          </p>
+          <div className="space-y-2 text-[10px] font-tech text-white/50 uppercase tracking-widest">
+            <p>check this videos for further explanation:</p>
+            <div className="flex gap-4">
+              <a href="https://youtu.be/rFPGw5TqOd0" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors underline decoration-blue-400/30 underline-offset-4">Stratos Recon Video</a>
+              <a href="https://youtu.be/E3YwWn1R15E" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors underline decoration-blue-400/30 underline-offset-4">Stratos Scout Video</a>
+            </div>
+            <p className="pt-2">
+              Stratos Scout github: <a href="https://github.com/katyazano/scouting2026" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-purple-300 transition-colors underline decoration-purple-400/30 underline-offset-4">github.com/katyazano/scouting2026</a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
