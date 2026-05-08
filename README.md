@@ -1,2 +1,1 @@
-1. `npm install`
-2. `npm run preview`
+https://stratos-recon.vercel.app/
